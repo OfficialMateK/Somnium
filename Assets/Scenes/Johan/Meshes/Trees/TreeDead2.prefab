@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3609657495793917275}
   - component: {fileID: 5189325250367908769}
   - component: {fileID: 6840036134127291292}
+  - component: {fileID: 1806960223186088540}
   m_Layer: 0
   m_Name: TreeDead2
   m_TagString: Untagged
@@ -91,6 +92,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1806960223186088540
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4518892872590819121}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1625664649272902843}
 --- !u!43 &-1625664649272902843
 Mesh:
   m_ObjectHideFlags: 0

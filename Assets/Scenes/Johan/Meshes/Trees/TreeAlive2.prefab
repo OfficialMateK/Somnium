@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5043060651276655688}
   - component: {fileID: 3013004735507710812}
   - component: {fileID: 5132767090522963658}
+  - component: {fileID: 1406599250603874043}
   m_Layer: 0
   m_Name: TreeAlive2
   m_TagString: Untagged
@@ -92,6 +93,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1406599250603874043
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2536304566184549763}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4322829551104358606}
 --- !u!21 &94870262233890474
 Material:
   serializedVersion: 6
