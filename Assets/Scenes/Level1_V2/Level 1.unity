@@ -2216,7 +2216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!154 &1643254308
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -2252,7 +2252,7 @@ Terrain:
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 34b5eaa693eec9e4caec34b995321ea9, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: bb99500d9fb680b478f2d3e3adff904f, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
