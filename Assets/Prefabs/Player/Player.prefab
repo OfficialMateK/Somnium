@@ -662,7 +662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8923231070435790763, guid: fe71636268c6c854ebb93099378268ea, type: 3}
   bulletDamage: 20
-  speedOfBullets: 10
+  speedOfBullets: 20
   weaponPoint: {fileID: 7691908981892459813}
 --- !u!1 &7691908982550369671
 GameObject:
@@ -1255,9 +1255,9 @@ MonoBehaviour:
   Crosshair: {fileID: 21300000, guid: 7fa7752f7f2a3fc4fbc2bcaea5671e2d, type: 3}
   playerCanMove: 1
   walkByDefault: 1
-  walkSpeed: 4
-  sprintSpeed: 8
-  jumpPower: 5
+  walkSpeed: 6
+  sprintSpeed: 12
+  jumpPower: 10
   canHoldJump: 1
   useStamina: 0
   staminaDepletionMultiplier: 2
@@ -1302,7 +1302,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   advanced:
-    gravityMultiplier: 1
+    gravityMultiplier: 2
     zeroFrictionMaterial: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
     highFrictionMaterial: {fileID: 13400000, guid: 6a3496a0b3effeb4d8985e3ec72ac870, type: 2}
   fps_Rigidbody: {fileID: 0}
