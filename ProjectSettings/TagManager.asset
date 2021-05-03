@@ -10,6 +10,7 @@ TagManager:
   - Melee Enemy
   - Distance Enemy
   - Ignore
+  - DestroyCrystal
   layers:
   - Default
   - TransparentFX
