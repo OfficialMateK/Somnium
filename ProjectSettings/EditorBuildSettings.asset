@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level1_V2/Level_2_Dilde.unity
     guid: aa8e8a7d80b13d4408ec580ca28fabd7
+  - enabled: 1
+    path: Assets/Scenes/Mahbobeh/TheBossRoom.unity
+    guid: 13af23e376a0d9d4bb9efc38990370b2
   m_configObjects: {}
