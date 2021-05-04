@@ -358,13 +358,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: PewPewStick
   speed: 485
-  rateOfFire: 400
+  rateOfFire: 200
   damage: 15
   ammunitionCount: 0
   magazineCount: 0
   magazineCountCapacity: 3
   magazineAmmunitionCapacity: 200
-  burstLength: 3
+  burstLength: 10
   currentMode: 1
   reloadTime: 5
   typeOfWeapon: 1

@@ -32,10 +32,10 @@ public class customWeaponController3D : MonoBehaviour
 	
 	[SerializeField] private Transform firePoint; //The procectile that the weapon fires
 	
-	private bool allowFire;
+	private bool allowFire = true;
 	private bool allowControl = true;
 	private bool reloaded;
-	private bool allowBurst;
+	private bool allowBurst = true;
 	
 	private GameObject camera;
 	
@@ -55,6 +55,7 @@ public class customWeaponController3D : MonoBehaviour
         Fire();
 		Reload();
 		TypeController();
+		TempExit();
 		//print(fireMode[currentMode]);
     }
 	
@@ -148,8 +149,7 @@ public class customWeaponController3D : MonoBehaviour
 		RaycastHit hit;
 
 		
-		
-        if (Physics.Raycast(camera.transform.position, camera.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+		if (Physics.Raycast(camera.transform.position, camera.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
 		{
             firePoint.LookAt(hit.point);
 
@@ -193,13 +193,13 @@ public class customWeaponController3D : MonoBehaviour
 	
 	private void BurstFire()
 	{
-		allowFire = true;
-		allowBurst = true;
+		//allowFire = true;
+		//allowBurst = true;
 		//int burstCount = 0;
 		
-		if(allowFire && Input.GetButtonDown("Fire1") && ammunitionCount > 0 && reloaded && allowBurst/* && burstCount < burstLength*/)
+		if(allowFire && Input.GetButtonDown("Fire1") && ammunitionCount > 0 && reloaded)/* && allowBurst && burstCount < burstLength*/
 		{
-			allowBurst = false;
+			//allowBurst = false;
 			//ammunitionCount -= 1;
 			
 			for(int burstCount = 0; burstCount < burstLength; burstCount ++)
@@ -208,14 +208,14 @@ public class customWeaponController3D : MonoBehaviour
 				
 				StartCoroutine("FireInterval");
 			}
-			allowBurst = true;
+			//allowBurst = true;
 			//GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 		}
 	}
 	
 	private void AutoFire()
 	{
-		allowFire = true;
+		//allowFire = true;
 		
 		if(allowFire && Input.GetButton("Fire1") && ammunitionCount > 0 && reloaded)
 		{
@@ -340,5 +340,23 @@ public class customWeaponController3D : MonoBehaviour
 		{
 			reloaded = true;
 		}
+	}
+	
+	private void TempExit()
+	{
+		if (Input.GetKey("escape"))
+        {
+			print("yeet!");
+            Quit();
+        }
+	}
+	
+	private void Quit()
+	{
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+		#else
+		Application.Quit();
+		#endif
 	}
 }
