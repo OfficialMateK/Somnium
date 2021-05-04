@@ -8,6 +8,7 @@ public class CapturePoint : MonoBehaviour
     public GameObject meleeEnemyPrefab;
     public GameObject rangedEnemyPrefab;
     public Transform[] spawnPoints;
+    public CapturePointUI captureUI;
 
     private float currentCaptureTime = 0f;
     private bool hasBeenStarted = false;
@@ -57,6 +58,7 @@ public class CapturePoint : MonoBehaviour
     private void StartCaptureCount()
     {
         currentCaptureTime += Time.deltaTime;
+        captureUI.SetProgress(currentCaptureTime);
         //Debug.Log("Current time: " + currentCaptureTime);
 
     }
