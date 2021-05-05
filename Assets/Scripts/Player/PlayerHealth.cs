@@ -8,27 +8,7 @@ public class PlayerHealth : MonoBehaviour
 {
 
     public int health;
-    public HealthBar healthBar;
 
-    private void Start()
-    {
-        //healthText.text = health.ToString();
-
-        if(PlayerPrefs.HasKey("PlayerHealth"))
-        {
-            if(PlayerPrefs.GetInt("PlayerHealth") <= 0)
-            {
-                PlayerPrefs.SetInt("PlayerHealth", health);
-            } else
-            {
-                health = PlayerPrefs.GetInt("PlayerHealth");
-            }
-        } else
-        {
-            PlayerPrefs.SetInt("PlayerHealth", health);
-        }
-
-        healthBar.SetMaxHealth(health);
     }
 	
 	void FixedUpdate()
