@@ -6,27 +6,47 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+
     public int health;
-    public Text healthText;
-    public float curHealth; //For health pick up script
 
-
-    private void Start()
-    {
-        healthText.text = health.ToString();
-        curHealth = health; //For health pick up script
     }
+	
+	void FixedUpdate()
+	{
+		HealthState();
+	}
+	
+	public int GetHealth()
+	{
+		return health;
+	}
+	
+	public void SetHealth(int setValue)
+	{
+		health = setValue;
+	}
 
     public void Damage(int damage)
     {
         health -= damage;
+        healthBar.SetHealth(health);
+        PlayerPrefs.SetInt("PlayerHealth", health);
 
-        if(health <= 0)
+        if (health <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        healthText.text = health.ToString();
-        Debug.Log("Player: Health Left = " + health);
+
+        //  healthText.text = health.ToString();
+        //Debug.Log("Player: Health Left = " + health);
     }
+	
+	private void HealthState()
+	{
+		if(health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+	}
 }

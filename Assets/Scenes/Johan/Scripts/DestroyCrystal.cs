@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DestroyCrystal : MonoBehaviour
 {
     //Health
-    public float maxKeyHealth = 500f;
+    public float maxHealth = 500f;
     public float damageThreshold = 50f;
+    public CrystalUI healthUI;
 
-    private float currentKeyHealth = 500f;
+    private LockedDoor lockedDoor;
+    private float currentHealth = 500f;
     public float healthRegenRate = 15f;
     private float currentDamageThreshold = 0;
     //private float invinciblePeriod = 0.1f;
@@ -25,14 +28,19 @@ public class DestroyCrystal : MonoBehaviour
     private int spawnPointNumber;
     private float enemySpawnTime = 10f;
     private float currentSpawnTime = 0f;
-    
 
+
+    private void Start()
+    {
+        lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (canSpawnEnemies)
         {
+            healthUI.SetHealth(currentHealth);
             CheckHealth();
             SpawnEnemiesOverTime();
             SpawnEnemyBurst();
@@ -44,11 +52,11 @@ public class DestroyCrystal : MonoBehaviour
     {
         //Vid skada - sänker liv och öker burst-threshold
         canSpawnEnemies = true;
-        currentKeyHealth -= damage;
+        currentHealth -= damage;
         currentDamageThreshold += damage;
         currentEnemyBurstThreshold++;
         
-        if(currentKeyHealth <= 0)
+        if(currentHealth <= 0)
         {
             canSpawnEnemies = false;
             DestroyKey();
@@ -108,15 +116,16 @@ public class DestroyCrystal : MonoBehaviour
     private void RegenHealth()
     {
         //När den inte har fullt liv ökas health med den healthRegenRate varje sekund
-        if(currentKeyHealth < maxKeyHealth)
+        if(currentHealth < maxHealth)
         {
-            currentKeyHealth += Time.deltaTime * healthRegenRate;
+            currentHealth += Time.deltaTime * healthRegenRate;
             currentDamageThreshold -= Time.deltaTime * healthRegenRate;
         }
     }
 
     private void DestroyKey()
     {
-
+        lockedDoor.IncreaseObjectivesComplete();
+        Destroy(gameObject, 0.1f);
     }
 }
