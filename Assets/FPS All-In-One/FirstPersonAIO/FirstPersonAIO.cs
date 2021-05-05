@@ -270,6 +270,7 @@ public class BETA_SETTINGS{
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         #region Look Settings - Start
 
         if(autoCrosshair)
@@ -356,7 +357,7 @@ public class BETA_SETTINGS{
 
         #endregion
     }
-
+    private Animator animator;
     private void FixedUpdate()
     {
         #region Look Settings - FixedUpdate
@@ -383,6 +384,7 @@ public class BETA_SETTINGS{
             for(int i = 0; i < hits.Length; i++) {
                 if(!hits[i].collider.isTrigger && hits[i].distance < nearest) {
                     IsGrounded = true;
+                    animator.SetBool("isGrounded", true); //#################################################################################################################################################
                     nearest = hits[i].distance;
                 }
             }
@@ -402,6 +404,9 @@ public class BETA_SETTINGS{
             yv += jumpPower;
             IsGrounded = false;
             didJump=false;
+
+            animator.SetTrigger("Jump"); //#################################################################################################################################################
+            animator.SetBool("isGrounded", false);
         }
 
         if(playerCanMove)

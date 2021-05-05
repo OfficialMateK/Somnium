@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+
     public int health;
     public HealthBar healthBar;
 
@@ -29,6 +30,21 @@ public class PlayerHealth : MonoBehaviour
 
         healthBar.SetMaxHealth(health);
     }
+	
+	void FixedUpdate()
+	{
+		HealthState();
+	}
+	
+	public int GetHealth()
+	{
+		return health;
+	}
+	
+	public void SetHealth(int setValue)
+	{
+		health = setValue;
+	}
 
     public void Damage(int damage)
     {
@@ -45,4 +61,12 @@ public class PlayerHealth : MonoBehaviour
         //  healthText.text = health.ToString();
         //Debug.Log("Player: Health Left = " + health);
     }
+	
+	private void HealthState()
+	{
+		if(health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+	}
 }
