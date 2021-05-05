@@ -17,4 +17,13 @@ public class UIChangeTrigger : MonoBehaviour
             UIToChangeTo.SetActive(true);
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            defaultUI.SetActive(true);
+            UIToChangeTo.SetActive(false);
+        }
+    }
 }
