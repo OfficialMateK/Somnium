@@ -559,7 +559,6 @@ GameObject:
   - component: {fileID: 7691908982389944495}
   - component: {fileID: 7691908982389944492}
   - component: {fileID: 7691908982389944493}
-  - component: {fileID: 7691908982389944490}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -648,22 +647,6 @@ MonoBehaviour:
   minYAngle: -60
   maxYAngle: 25
   PlayerHead: {fileID: 7691908982103607489}
---- !u!114 &7691908982389944490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691908982389944488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d3f6a5f1004f414e805f4dac7a64b90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8923231070435790763, guid: fe71636268c6c854ebb93099378268ea, type: 3}
-  bulletDamage: 25
-  speedOfBullets: 800
-  weaponPoint: {fileID: 7691908981892459813}
 --- !u!1 &7691908982550369671
 GameObject:
   m_ObjectHideFlags: 0
