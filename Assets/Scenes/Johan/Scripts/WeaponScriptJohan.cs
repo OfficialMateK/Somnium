@@ -8,12 +8,19 @@ public class WeaponScriptJohan : MonoBehaviour
     public int bulletDamage;
     public float speedOfBullets;
     public Transform weaponPoint;
+    public ParticleSystem muzzleFlash;
+
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             RaycastHit hit;
+            //ParticleSystem ps = Instantiate(muzzleFlash, weaponPoint.position, weaponPoint.rotation);
+            // ps.Play();
+            // Destroy(ps.gameObject, 0.1f);
+
+            muzzleFlash.Play();
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
             {
