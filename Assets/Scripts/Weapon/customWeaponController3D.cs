@@ -55,6 +55,7 @@ public class customWeaponController3D : MonoBehaviour
         Fire();
 		Reload();
 		TypeController();
+		AmmunitionController();
 		TempExit();
 		//print(fireMode[currentMode]);
     }
@@ -73,12 +74,27 @@ public class customWeaponController3D : MonoBehaviour
 	{
 		return ammunitionCount;
 	}
-	
+
+	public int GetMagazineAmmunitionCapacity()
+	{
+		return magazineAmmunitionCapacity;
+	}
+
 	public int GetMagazineCount()
 	{
-		return ammunitionCount;
+		return magazineCount;
 	}
-	
+
+	public void SetAmmunitionCount(int value) 
+	{
+		ammunitionCount = value;
+	}
+
+	public void AddAmmunitionCount(int value)
+	{
+		ammunitionCount += value;
+	}
+
 	private void Variables()
 	{
 		ammunitionCount = magazineAmmunitionCapacity;
@@ -325,10 +341,11 @@ public class customWeaponController3D : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0);
                 }*/
-            }
+            } 
+			allowFire = true;
         }
-        allowFire = true;
-    }
+		allowFire = true;
+	}
 	
 	private void CheckReloadAtStart()
 	{
@@ -358,5 +375,17 @@ public class customWeaponController3D : MonoBehaviour
 		#else
 		Application.Quit();
 		#endif
+	}
+
+	private void AmmunitionController() 
+	{
+		if(ammunitionCount >= magazineAmmunitionCapacity) 
+		{
+			ammunitionCount = magazineAmmunitionCapacity;
+		}
+		if(ammunitionCount <= 0) 
+		{
+			ammunitionCount = 0;
+		}
 	}
 }
