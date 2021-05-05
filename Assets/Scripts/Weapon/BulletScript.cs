@@ -35,6 +35,10 @@ public class BulletScript : MonoBehaviour
                 collision.gameObject.GetComponent<MeleeEnemyScript>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
+            case "New Melee Enemy":
+                collision.gameObject.GetComponent<NewMeleeEnemyScript>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
             case "Distance Enemy":
                 collision.gameObject.GetComponent<DistanceEnemyScript>().Damage(bulletDamage);
                 Destroy(gameObject);

@@ -6,12 +6,29 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int health;
-    [SerializeField] private Text healthText;
+
+    public int health;
+    public HealthBar healthBar;
 
     private void Start()
     {
-        healthText.text = health.ToString();
+        //healthText.text = health.ToString();
+
+        if(PlayerPrefs.HasKey("PlayerHealth"))
+        {
+            if(PlayerPrefs.GetInt("PlayerHealth") <= 0)
+            {
+                PlayerPrefs.SetInt("PlayerHealth", health);
+            } else
+            {
+                health = PlayerPrefs.GetInt("PlayerHealth");
+            }
+        } else
+        {
+            PlayerPrefs.SetInt("PlayerHealth", health);
+        }
+
+        healthBar.SetMaxHealth(health);
     }
 	
 	void FixedUpdate()
@@ -32,9 +49,17 @@ public class PlayerHealth : MonoBehaviour
     public void Damage(int damage)
     {
         health -= damage;
+        healthBar.SetHealth(health);
+        PlayerPrefs.SetInt("PlayerHealth", health);
 
-        healthText.text = health.ToString();
-        Debug.Log("Player: Health Left = " + health);
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+
+        //  healthText.text = health.ToString();
+        //Debug.Log("Player: Health Left = " + health);
     }
 	
 	private void HealthState()
