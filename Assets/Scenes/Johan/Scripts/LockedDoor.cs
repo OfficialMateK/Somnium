@@ -16,7 +16,7 @@ public class LockedDoor : MonoBehaviour
     public void IncreaseObjectivesComplete()
     {
         objectivesComplete++;
-        if(objectivesComplete >= 1)
+        if(objectivesComplete >= 3)
         {
             UnlockDoor();
         }
