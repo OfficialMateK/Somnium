@@ -5,25 +5,20 @@ using UnityEngine.UI;
 
 public class HealthPickUp : MonoBehaviour
 {
+    public int healthBonus = 15;
 
-    PlayerHealth playerHealth;
-
-
-
-    public float healthBonus = 15f;
-
-
-    void Awake()
+    private GameObject player;
+    private void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (playerHealth.curHealth < playerHealth.health)
+        if(other.CompareTag("Player"))
         {
+            player.GetComponent<PlayerHealth>().AddHealth(healthBonus);
             Destroy(gameObject);
-            playerHealth.curHealth = playerHealth.curHealth + healthBonus;
         }
     }
 }
