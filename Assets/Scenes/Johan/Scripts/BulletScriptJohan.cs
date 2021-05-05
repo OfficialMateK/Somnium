@@ -32,7 +32,11 @@ public class BulletScriptJohan : MonoBehaviour
         switch(collision.gameObject.tag)
         {
             case "Melee Enemy":
-                collision.gameObject.GetComponent<MeleeEnemyScriptJohan>().Damage(bulletDamage);
+                collision.gameObject.GetComponent<MeleeEnemyScript>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "New Melee Enemy":
+                collision.gameObject.GetComponent<NewMeleeEnemyScript>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
             case "Distance Enemy":
