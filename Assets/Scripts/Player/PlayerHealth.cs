@@ -8,10 +8,13 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public Text healthText;
+    public float curHealth; //For health pick up script
+
 
     private void Start()
     {
         healthText.text = health.ToString();
+        curHealth = health; //For health pick up script
     }
 
     public void Damage(int damage)
