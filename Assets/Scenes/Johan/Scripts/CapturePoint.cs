@@ -109,7 +109,7 @@ public class CapturePoint : MonoBehaviour
             playerInside = true;
         }
 
-        if (other.CompareTag("New Melee Enemy") || other.CompareTag("Distance Enemy"))
+        if (other.CompareTag("Melee Enemy") || other.CompareTag("Distance Enemy"))
         {
             numberOfEnemiesInside++; ;
         }
@@ -122,7 +122,7 @@ public class CapturePoint : MonoBehaviour
             playerInside = false;   
         }
 
-        if (other.CompareTag("New Melee Enemy") || other.CompareTag("Distance Enemy"))
+        if (other.CompareTag("Melee Enemy") || other.CompareTag("Distance Enemy"))
         {
             numberOfEnemiesInside--;
         }

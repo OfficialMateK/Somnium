@@ -44,18 +44,10 @@ public class NewMeleeEnemyScript : MonoBehaviour
 
         if (enemyHealth <= 0)
         {
-            StartCoroutine(KillEnemy());
+            Destroy(gameObject);
         }
 
         Debug.Log("Enemy: Health Left: " + enemyHealth);
-    }
-
-    private IEnumerator KillEnemy()
-    {
-        //gameObject.SetActive(false);
-        transform.position = new Vector3(0, 3000, 0);
-        yield return new WaitForSeconds(0.1f);
-        Destroy(gameObject);
     }
 
     private void OnTriggerStay(Collider other)
