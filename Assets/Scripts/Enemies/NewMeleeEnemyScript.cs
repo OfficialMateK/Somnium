@@ -14,7 +14,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
     private float attackCooldownTemp;
     void Start()
     {
-        player = GameObject.Find("PlayerTargetPoint");
+        player = GameObject.Find("Player");
     }
 
     void Update()
