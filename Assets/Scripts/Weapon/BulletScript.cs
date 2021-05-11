@@ -8,6 +8,9 @@ public class BulletScript : MonoBehaviour
     public float timetodie = 10.0f;
     public int bulletDamage;
 
+    public enum Shooter {PLAYER, ENEMY};
+    public Shooter shooter;
+
     private float bulletVelocity;
     private Vector3 bulletDirection;
 
@@ -32,19 +35,31 @@ public class BulletScript : MonoBehaviour
         switch(collision.gameObject.tag)
         {
             case "Melee Enemy":
-                collision.gameObject.GetComponent<MeleeEnemyScript>().Damage(bulletDamage);
+                if(shooter == Shooter.PLAYER)
+                {
+                    collision.gameObject.GetComponent<MeleeEnemyScript>().Damage(bulletDamage);
+                }
                 Destroy(gameObject);
                 break;
             case "New Melee Enemy":
-                collision.gameObject.GetComponent<NewMeleeEnemyScript>().Damage(bulletDamage);
+                if(shooter == Shooter.PLAYER)
+                {
+                    collision.gameObject.GetComponent<NewMeleeEnemyScript>().Damage(bulletDamage);
+                }
                 Destroy(gameObject);
                 break;
             case "Distance Enemy":
-                collision.gameObject.GetComponent<DistanceEnemyScript>().Damage(bulletDamage);
+                if(shooter == Shooter.PLAYER)
+                {
+                    collision.gameObject.GetComponent<DistanceEnemyScript>().Damage(bulletDamage);
+                }
                 Destroy(gameObject);
                 break;
             case "Player":
-                collision.gameObject.GetComponent<PlayerHealth>().Damage(bulletDamage);
+                if(shooter == Shooter.ENEMY)
+                {
+                    collision.gameObject.GetComponent<PlayerHealth>().Damage(bulletDamage);
+                }
                 Destroy(gameObject);
                 break;
             case "Ignore":
