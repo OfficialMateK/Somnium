@@ -57,10 +57,18 @@ public class DistanceEnemyScript : MonoBehaviour
 
         if (enemyHealth <= 0)
         {
-            Destroy(gameObject);
+            StartCoroutine(KillEnemy());
         }
 
         Debug.Log("Enemy: Health Left: " + enemyHealth);
+    }
+
+    private IEnumerator KillEnemy()
+    {
+        //gameObject.SetActive(false);
+        transform.position = new Vector3(0, 3000, 0);
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 
     private void Shoot()
