@@ -78,6 +78,7 @@ public class DistanceEnemyScript : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, weaponPoint.position, weaponPoint.rotation) as GameObject;
         bullet.GetComponent<BulletScript>().bulletSpeed = bulletSpeed;
         bullet.GetComponent<BulletScript>().bulletDamage = enemyDamage;
+        bullet.GetComponent<BulletScript>().shooter = BulletScript.Shooter.ENEMY;
     }
     //private void OnTriggerStay(Collider other)
     //{
