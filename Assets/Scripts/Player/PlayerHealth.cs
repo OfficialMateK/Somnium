@@ -50,9 +50,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddHealth(int healthToAdd)
     {
-        if(health + healthToAdd > 100)
+        if(health + healthToAdd > 200)
         {
-            health = 100;
+            health = 200;
         } else
         {
             health += healthToAdd;
