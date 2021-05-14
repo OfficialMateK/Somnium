@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CrystalUI : MonoBehaviour
 {
-    public Text healthText;
+    private TMP_Text healthText;
 
+    private void Start()
+    {
+        healthText = GetComponent<TMP_Text>();   
+    }
 
     public void SetHealth(float health)
     {
