@@ -4,26 +4,53 @@ using UnityEngine;
 
 public class UIChangeTrigger : MonoBehaviour
 {
-    public GameObject UIToChangeTo;
-    public GameObject defaultUI;
+    public GameObject allObjectivesUI;
+    public GameObject areaUI;
+    public GameObject objective1Text;
+    public GameObject objective2Text;
+    public GameObject objective3Text;
 
+    private bool insideArea = false;
 
-
-    private void OnTriggerEnter(Collider other)
+    private void ChangeUI()
     {
-        if (other.CompareTag("Player"))
+        if (insideArea)
         {
-            defaultUI.SetActive(false);
-            UIToChangeTo.SetActive(true);
+            //När spelaren går in i arean - byt UI till den för objectivet
+            areaUI.SetActive(true);
+            allObjectivesUI.SetActive(false);
         }
+        else
+        {
+            //När spelaren går ut ur arean eller klarat objektivet - byt UI till default
+            areaUI.SetActive(false);
+            allObjectivesUI.SetActive(true);
+        }
+        
     }
 
-    private void OnTriggerExit(Collider other)
+    public void triggerUIChange(int objectiveNumber)
     {
-        if (other.CompareTag("Player"))
+        insideArea = !insideArea;
+        ChangeUI();
+
+        switch (objectiveNumber)
         {
-            defaultUI.SetActive(true);
-            UIToChangeTo.SetActive(false);
+            case 1:
+                objective1Text.GetComponent<SealCompletion>().CompleteObjective();
+                break;
+            case 2:
+                objective2Text.GetComponent<SealCompletion>().CompleteObjective();
+                break;
+            case 3:
+                objective3Text.GetComponent<SealCompletion>().CompleteObjective();
+                break;
+            default:
+                break;
         }
+
+           
     }
+
+
 }

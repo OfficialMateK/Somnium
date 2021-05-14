@@ -8,7 +8,10 @@ public class DestroyCrystal : MonoBehaviour
     //Health
     public float maxHealth = 500f;
     public float damageThreshold = 50f;
+
+    //UI
     public CrystalUI healthUI;
+    public UIChangeTrigger uiChangeTrigger;
 
     private LockedDoor lockedDoor;
     private float currentHealth = 500f;
@@ -33,6 +36,7 @@ public class DestroyCrystal : MonoBehaviour
     private void Start()
     {
         lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        uiChangeTrigger = GetComponentInChildren<UIChangeTrigger>();
     }
 
     // Update is called once per frame
@@ -126,6 +130,7 @@ public class DestroyCrystal : MonoBehaviour
     private void DestroyKey()
     {
         lockedDoor.IncreaseObjectivesComplete();
+        uiChangeTrigger.triggerUIChange(1);
         Destroy(gameObject, 0.1f);
     }
 }

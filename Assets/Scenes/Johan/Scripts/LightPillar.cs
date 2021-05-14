@@ -19,4 +19,12 @@ public class LightPillar : MonoBehaviour
             animator.SetTrigger("PlayerEntered");
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            animator.SetTrigger("PlayerExited");
+        }
+    }
 }
