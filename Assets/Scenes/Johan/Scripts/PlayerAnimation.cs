@@ -23,7 +23,8 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetFloat("Speed", speed);
         anim.SetFloat("Direction", direction);
 
-
+        if (Input.GetButtonDown("Fire1"))
+            anim.SetTrigger("Shoot");
 
     }
 }
