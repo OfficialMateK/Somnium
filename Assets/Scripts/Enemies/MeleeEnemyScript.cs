@@ -8,6 +8,8 @@ public class MeleeEnemyScript : MonoBehaviour
     public float attackCooldown;
     public int enemyDamage;
     public int enemyHealth;
+	
+	[SerializeField] private float attackCooldownTime;
 
     private GameObject player;
     private float attackCooldownTemp;
@@ -47,11 +49,12 @@ public class MeleeEnemyScript : MonoBehaviour
 
         Debug.Log("Enemy: Health Left: " + enemyHealth);
     }
+	
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (attackCooldownTemp <= 0.0f)
+            if (attackCooldownTemp <= attackCooldownTime)
             {
                 Debug.Log("Enemy: Hit Player");
                 other.GetComponent<PlayerHealth>().Damage(enemyDamage);

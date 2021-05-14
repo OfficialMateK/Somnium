@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
   public void PlayGame()
     {
+        PlayerPrefs.SetInt("PlayerHealth", 200);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

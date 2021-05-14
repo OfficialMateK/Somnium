@@ -18,7 +18,7 @@ public class DistanceEnemyScript : MonoBehaviour
     private float attackCooldownTemp;
     void Start()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("PlayerTargetPoint");
     }
 
     void Update()
@@ -57,10 +57,18 @@ public class DistanceEnemyScript : MonoBehaviour
 
         if (enemyHealth <= 0)
         {
-            Destroy(gameObject);
+            StartCoroutine(KillEnemy());
         }
 
         Debug.Log("Enemy: Health Left: " + enemyHealth);
+    }
+
+    private IEnumerator KillEnemy()
+    {
+        //gameObject.SetActive(false);
+        transform.position = new Vector3(0, 3000, 0);
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 
     private void Shoot()
@@ -70,6 +78,7 @@ public class DistanceEnemyScript : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, weaponPoint.position, weaponPoint.rotation) as GameObject;
         bullet.GetComponent<BulletScript>().bulletSpeed = bulletSpeed;
         bullet.GetComponent<BulletScript>().bulletDamage = enemyDamage;
+        bullet.GetComponent<BulletScript>().shooter = BulletScript.Shooter.ENEMY;
     }
     //private void OnTriggerStay(Collider other)
     //{

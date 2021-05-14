@@ -225,8 +225,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpeed: 1.5
   attackCooldown: 0.5
-  distanceUntilShoot: 10
-  distanceUntilMoving: 20
+  distanceUntilShoot: 20
+  distanceUntilMoving: 30
   bulletSpeed: 15
   enemyDamage: 15
   enemyHealth: 100

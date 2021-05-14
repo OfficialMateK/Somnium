@@ -400,7 +400,7 @@ GameObject:
   m_Layer: 0
   m_Name: WeaponPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -559,7 +559,6 @@ GameObject:
   - component: {fileID: 7691908982389944495}
   - component: {fileID: 7691908982389944492}
   - component: {fileID: 7691908982389944493}
-  - component: {fileID: 7691908982389944490}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
