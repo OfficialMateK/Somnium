@@ -21,6 +21,7 @@ public class WeaponScript : MonoBehaviour
                 GameObject bullet = Instantiate(bulletPrefab, weaponPoint.position, weaponPoint.rotation) as GameObject;
                 bullet.GetComponent<BulletScript>().bulletSpeed = speedOfBullets;
                 bullet.GetComponent<BulletScript>().bulletDamage = this.bulletDamage;
+                bullet.GetComponent<BulletScript>().shooter = BulletScript.Shooter.PLAYER;
             } else
             {
                 weaponPoint.LookAt(transform.position + transform.forward * 250);
@@ -28,6 +29,7 @@ public class WeaponScript : MonoBehaviour
                 GameObject bullet = Instantiate(bulletPrefab, weaponPoint.position, weaponPoint.rotation) as GameObject;
                 bullet.GetComponent<BulletScript>().bulletSpeed = speedOfBullets;
                 bullet.GetComponent<BulletScript>().bulletDamage = this.bulletDamage;
+                bullet.GetComponent<BulletScript>().shooter = BulletScript.Shooter.PLAYER;
             }
         }
     }

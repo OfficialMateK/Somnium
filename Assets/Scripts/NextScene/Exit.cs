@@ -9,7 +9,10 @@ public class Exit : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Changing Scene...");
-        SceneManager.LoadScene(levelName);
+        if(other.CompareTag("Player"))
+        {
+            Debug.Log("Changing Scene...");
+            SceneManager.LoadScene(levelName);
+        }
     }
 }
