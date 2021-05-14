@@ -10,6 +10,8 @@ public class CapturePoint : MonoBehaviour
     public Transform[] spawnPoints;
     public CapturePointUI captureUI;
 
+    private LockedDoor lockedDoor;
+    private bool lockCapturePoint = false;
     private float currentCaptureTime = 0f;
     private bool hasBeenStarted = false;
     private bool hasBeenCompleted = false;
@@ -20,6 +22,10 @@ public class CapturePoint : MonoBehaviour
     private float spawnTime = 0f;
     private int spawnPointNumber;
 
+    private void Start()
+    {
+        lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+    }
 
     void Update()
     {
@@ -28,7 +34,7 @@ public class CapturePoint : MonoBehaviour
             CheckCaptureState();
             SpawnEnemies();
         }
-        else if (hasBeenCompleted)
+        else if (hasBeenCompleted && !lockCapturePoint)
         {
             CompleteCapture();
         }
@@ -89,6 +95,9 @@ public class CapturePoint : MonoBehaviour
     {
         //GameController.objectivesCompleted++;
         //*Cool particles*
+
+        lockCapturePoint = true;
+        lockedDoor.IncreaseObjectivesComplete();
         Debug.Log("Capture complete: " + currentCaptureTime);
     }
 
@@ -100,7 +109,7 @@ public class CapturePoint : MonoBehaviour
             playerInside = true;
         }
 
-        if (other.CompareTag("Melee Enemy") || other.CompareTag("Distance Enemy"))
+        if (other.CompareTag("New Melee Enemy") || other.CompareTag("Distance Enemy"))
         {
             numberOfEnemiesInside++; ;
         }
@@ -113,7 +122,7 @@ public class CapturePoint : MonoBehaviour
             playerInside = false;   
         }
 
-        if (other.CompareTag("Melee Enemy") || other.CompareTag("Distance Enemy"))
+        if (other.CompareTag("New Melee Enemy") || other.CompareTag("Distance Enemy"))
         {
             numberOfEnemiesInside--;
         }

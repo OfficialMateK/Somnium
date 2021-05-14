@@ -5,20 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
+    public string levelName;
+
     void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene(4);
-    }
-
-
-    void Start()
-    {
-
-    }
-
-
-    void Update()
-    {
-        
+        if(other.CompareTag("Player"))
+        {
+            Debug.Log("Changing Scene...");
+            SceneManager.LoadScene(levelName);
+        }
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - Distance Enemy
   - Ignore
   - New Melee Enemy
+  - DestroyCrystal
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Ground
   - 
   - 
   - 

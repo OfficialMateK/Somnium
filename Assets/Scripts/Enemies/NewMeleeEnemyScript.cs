@@ -14,7 +14,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
     private float attackCooldownTemp;
     void Start()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("PlayerTargetPoint");
     }
 
     void Update()
@@ -44,10 +44,18 @@ public class NewMeleeEnemyScript : MonoBehaviour
 
         if (enemyHealth <= 0)
         {
-            Destroy(gameObject);
+            StartCoroutine(KillEnemy());
         }
 
         Debug.Log("Enemy: Health Left: " + enemyHealth);
+    }
+
+    private IEnumerator KillEnemy()
+    {
+        //gameObject.SetActive(false);
+        transform.position = new Vector3(0, 3000, 0);
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 
     private void OnTriggerStay(Collider other)

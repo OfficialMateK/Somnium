@@ -10,6 +10,7 @@ public class DestroyCrystal : MonoBehaviour
     public float damageThreshold = 50f;
     public CrystalUI healthUI;
 
+    private LockedDoor lockedDoor;
     private float currentHealth = 500f;
     public float healthRegenRate = 15f;
     private float currentDamageThreshold = 0;
@@ -27,8 +28,12 @@ public class DestroyCrystal : MonoBehaviour
     private int spawnPointNumber;
     private float enemySpawnTime = 10f;
     private float currentSpawnTime = 0f;
-    
 
+
+    private void Start()
+    {
+        lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -120,6 +125,7 @@ public class DestroyCrystal : MonoBehaviour
 
     private void DestroyKey()
     {
-
+        lockedDoor.IncreaseObjectivesComplete();
+        Destroy(gameObject, 0.1f);
     }
 }
