@@ -7,6 +7,7 @@ public class HealthPickUp : MonoBehaviour
 {
     public int healthBonus = 15;
 
+    public AudioClip heartSound;
     public GameObject pickupEffect;
 
     private GameObject player;
@@ -20,6 +21,7 @@ public class HealthPickUp : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             player.GetComponent<PlayerHealth>().AddHealth(healthBonus);
+            
             pickUp();
             
         }
@@ -29,6 +31,8 @@ public class HealthPickUp : MonoBehaviour
     {
         //Spawn a effect
         Instantiate(pickupEffect, transform.position, transform.rotation);
+
+        AudioSource.PlayClipAtPoint(heartSound, transform.position);
 
         Destroy(gameObject);
     }

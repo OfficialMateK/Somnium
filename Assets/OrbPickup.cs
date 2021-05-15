@@ -6,7 +6,7 @@ public class OrbPickup : MonoBehaviour
 {
 
     public GameObject pickupEffect;
-
+    public AudioClip orbSound;
 
 
     void OnTriggerEnter(Collider other)
@@ -26,7 +26,7 @@ public class OrbPickup : MonoBehaviour
         Instantiate(pickupEffect, transform.position, transform.rotation);
 
 
-
+        AudioSource.PlayClipAtPoint(orbSound, transform.position);
 
         //Destroy object
         Destroy(gameObject);
