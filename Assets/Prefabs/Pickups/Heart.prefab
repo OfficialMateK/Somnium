@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBonus: 15
+  heartSound: {fileID: 8300000, guid: a5f9694508fd9464e893a83cdae844a0, type: 3}
   pickupEffect: {fileID: 8476874279954837175, guid: 3697cfa623bc8f241b4a96f1318d911c, type: 3}
 --- !u!1 &8865490221553524724
 GameObject:
