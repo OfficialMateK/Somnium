@@ -9,13 +9,14 @@ public class cameraScript3D : MonoBehaviour
 	[SerializeField] private float minimumRotationX;
 	[SerializeField] private float maximumRotationX;
 	[SerializeField] private float ray;
-	
+	[SerializeField] private float mouseSensitivity;
+
 	[SerializeField] private Vector3 cameraOffset;
 	
 	[SerializeField] private LayerMask cameraCollisionMask;
 	
 	//private Transform cameraTransform;
-	private float mouseSensitivity;//[SerializeField]
+	
 	private float rotationX;//[SerializeField] 
 	private float rotationY;//[SerializeField] 
 	
@@ -29,8 +30,8 @@ public class cameraScript3D : MonoBehaviour
     {
 		//cameraTransform = transform;
         player = GameObject.FindGameObjectWithTag("Player");
-		mouseSensitivity = player.GetComponent<customPlayerController3D>().GetMouseSensitivity();
-		CursorLock();
+		//mouseSensitivity = player.GetComponent<customPlayerController3D>().GetMouseSensitivity();
+		//CursorLock();
     }
 
     void FixedUpdate()
@@ -39,7 +40,7 @@ public class cameraScript3D : MonoBehaviour
 		CameraPosition();
         PlayerRotation();
 		CameraCollision();
-		TempExit();
+		//TempExit();
 		//MoveVectorToRotation();
     }
 	
@@ -56,7 +57,7 @@ public class cameraScript3D : MonoBehaviour
 	
 	private void PlayerRotation()
 	{
-		Quaternion cameraRotation = transform.rotation;
+		//Quaternion cameraRotation = transform.rotation;
 		player.transform.rotation = Quaternion.Euler(0,cameraFinalRotation.y,0);
 	}
 	
@@ -90,12 +91,12 @@ public class cameraScript3D : MonoBehaviour
 		}
 	}
 	
-	private void CursorLock()
+	/*private void CursorLock()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
-	}
+	}*/
 	
-	private void TempExit()
+	/*private void TempExit()
 	{
 		if (Input.GetKey("escape"))
         {
@@ -111,5 +112,5 @@ public class cameraScript3D : MonoBehaviour
 		#else
 		Application.Quit();
 		#endif
-	}
+	}*/
 }

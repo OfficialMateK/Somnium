@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class ammunitionPickup3D : MonoBehaviour
 {
-	[SerializeField] GameObject player; 
+	[SerializeField] private int maximumAmmunitionCount;
+    [SerializeField] private int minimumAmmunitionCount;
 	
-    //[SerializeField] private int ammunition;
-	[SerializeField] private int maxAmmunition;
-    [SerializeField] private int minAmmunition;
-	
-	//[SerializeField] float MinHealth;
-	//[SerializeField] float MaxHealth;
 	//[SerializeField] float decay = 20;
 	[SerializeField] float killBoundry = -100;
 
 	private string newline = "\n";
 	
-	//int maxAmmunitionCount;
+	private GameObject weapon;
 	
 	// Start is called before the first frame update
-	void Start()
+	void Awake()
 	{
 		Constants();
 		//Decay();
@@ -33,54 +28,61 @@ public class ammunitionPickup3D : MonoBehaviour
 
 	private void Constants()
 	{
-		player = GameObject.FindGameObjectWithTag("Player");
-		//maxAmmunitionCount = player.GetComponent<playerStats_IU1>().maxPlayerHealth;
+		weapon = GameObject.FindGameObjectWithTag("Weapon");
 	}
 
-	/*void Variables()
+	void OnTriggerEnter(Collider collider)
 	{
-		GameObject Player = GameObject.FindGameObjectWithTag("Player");
-	}*/
-
-	void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.tag == "Player")
+		if (collider.gameObject.CompareTag("Player"))
 		{
-			print("Pickup collided with player");
-			int ammunition = /*collision.gameObject*/player.GetComponent<customWeaponController3D>().GetAmmunitionCount();
-			int ammunitionCapacity = /*collision.gameObject*/player.GetComponent<customWeaponController3D>().GetMagazineAmmunitionCapacity();
-			int randomAmmunition = AmmunitionRandom(minAmmunition, maxAmmunition);
-			print("ammo : " + ammunition + newline + "capacity : " + ammunitionCapacity + newline + "randomNr : " + randomAmmunition);
+			print("Pickup collided with player"); //weapon.GetComponent<customWeaponController3D>().;
 
-			if (ammunition < ammunitionCapacity && ammunition + randomAmmunition >= ammunitionCapacity)
+			int ammunition = weapon.GetComponent<customWeaponController3D>().GetAmmunitionCount();
+			int ammunitionCapacity = weapon.GetComponent<customWeaponController3D>().GetMagazineAmmunitionCapacity();
+			int capacityForMagazines = weapon.GetComponent<customWeaponController3D>().GetMagazineCountCapacity();
+			int storedAmmunition = weapon.GetComponent<customWeaponController3D>().GetStoredAmmunition();
+			int storedAmmunitionCapacity = ammunitionCapacity * capacityForMagazines;
+			int recievedAmmunition = AmmunitionRecieved(minimumAmmunitionCount, maximumAmmunitionCount);
+
+			print("stored&recievedAmmo: " + (storedAmmunition + recievedAmmunition) + newline + "recievedAmmo: " + recievedAmmunition);
+
+			/*if (ammunition < ammunitionCapacity && (storedAmmunition + recievedAmmunition) >= storedAmmunitionCapacity)
 			{
-				collision.gameObject.GetComponent<customWeaponController3D>().SetAmmunitionCount(ammunitionCapacity);
+				//weapon.GetComponent<customWeaponController3D>().SetAmmunitionCount(ammunitionCapacity);
+				weapon.GetComponent<customWeaponController3D>().SetStoredAmmunition(storedAmmunitionCapacity);
 				Remove();
-				/*print("maxPlayerHP = "+maxPlayerHP);
-				print("pHP = "+pHP);
-				print("pHP + randomHPvalue = "+(pHP + randomHPvalue));*/
-			}
-			if (ammunition < ammunitionCapacity && ammunition + randomAmmunition < ammunitionCapacity)
+				print("5");
+			}*/
+			if (storedAmmunition < storedAmmunitionCapacity)
 			{
-				//print("start self-destruction");
-				collision.gameObject.GetComponent<customWeaponController3D>().AddAmmunitionCount(randomAmmunition);
+				//weapon.GetComponent<customWeaponController3D>().SetAmmunitionCount(ammunitionCapacity);
+				//if (storedAmmunition + recievedAmmunition < storedAmmunitionCapacity) 
+				//{
+					weapon.GetComponent<customWeaponController3D>().AddStoredAmmunition(recievedAmmunition);
+				/*}
+				if (storedAmmunition + recievedAmmunition >= storedAmmunitionCapacity)
+				{
+					weapon.GetComponent<customWeaponController3D>().SetStoredAmmunition(storedAmmunitionCapacity);
+				}*/
+
 				Remove();
+				//print("5");
 			}
-			if (ammunition >= ammunitionCapacity && ammunition + randomAmmunition >= ammunitionCapacity)
+			/*if (ammunition >= ammunitionCapacity && (storedAmmunition + recievedAmmunition) >= storedAmmunitionCapacity)
 			{
+				print("7");
 				return;
-			}
-
+			}*/
 		}
 	}
 
-	private int AmmunitionRandom(int min, int max)
+	private int AmmunitionRecieved(int minimumAmmunition, int maximumAmmunition)
 	{
-		int overheadValue = (max + 1);
+		int overheadValue = (maximumAmmunition + 1);
 
-		int ammunitionAdded = Random.Range(min, overheadValue);
+		int magazinesAdded = Random.Range(minimumAmmunition, overheadValue);
 		//print(HP_Added+" HP will be added");
-		return (ammunitionAdded);
+		return (magazinesAdded);
 	}
 	private void Remove()
 	{

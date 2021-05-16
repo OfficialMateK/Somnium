@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
+
 
 public class customWeaponController3D : MonoBehaviour
 {
 	[SerializeField] private string weaponName; //The name of your weapon
 	
-	[SerializeField] private float speed; //Speed of the projectile in m/s
-	
+	[SerializeField] private float speed; //Speed of the projectile in m/s	
+	[SerializeField] private float zoomFactor; //The factor by which your view will be zoomed in by;
+
 	[SerializeField] private int rateOfFire; //The cyclic rate of fire, in rounds per minute, that is fired
 	[SerializeField] private int damage; //Ammount of health each hit removes from the hit target
 	[SerializeField] private int ammunitionCount; //Ammount of ammunition currently stored in the magazine
 	[SerializeField] private int magazineCount; //Ammount of magazines currently stored
 	[SerializeField] private int magazineCountCapacity; //Ammount of maagazines that can be stored for said weapon
 	[SerializeField] private int magazineAmmunitionCapacity; //Ammount of ammunition that can be stored in each magazine
+	[SerializeField] private int storedAmmunition; //Total ammount of ammunition that is stored at any given time
 	[SerializeField] private int burstLength; //Ammount of projectiles fired each burst during burst fire mode
 	[SerializeField] private int currentMode = 1; //Index for active fire mode, default : single fire
 	[SerializeField] private int reloadTime; //The time it takes to reload a magazine in seconds
@@ -27,38 +31,68 @@ public class customWeaponController3D : MonoBehaviour
 	
 	[SerializeField] private bool hasAuto; //Allows for auto fire mode
 	[SerializeField] private bool hasBurst; //Allows for burst fire mode
-	
+	[SerializeField] private bool hasZoom; //Allows for zoomed view
+
 	[SerializeField] private GameObject projectilePrefab; //The procectile that the weapon fires
-	
+	[SerializeField] private GameObject ammunitionCounterUI; //Displays ammunition count in active magazine on the
+	[SerializeField] private GameObject storedAmmunitionCounterUI; //Displays ammunition count in active magazine on the UI
+	[SerializeField] private GameObject fireModeCounterUI; //Displays ammunition count in active magazine on the UI
+	[SerializeField] private GameObject aimingCrosshair; //Crosshair for targeting
+	[SerializeField] private GameObject reloadCrosshair; //Crosshair for displaying when you are reloading
+	[SerializeField] private GameObject fireDenialCrosshair; //Crosshair for displaying when you can and can't shoot
+	[SerializeField] private GameObject outOfAmmoIndicator; //Indicates when you are out of stored ammo
+	[SerializeField] private Color hostileTargetingColour; //Colour of the crosshair when targeting enemy
+	[SerializeField] private Color neutralTargetingColour; //Colour of the crosshair when targeting nothing
+
 	[SerializeField] private Transform firePoint; //The procectile that the weapon fires
+
+	[SerializeField] private ParticleSystem muzzleFlash; //The flash that appears att the end of the rifle barrel from when the gunpowder is ignited in the projectile (assuming it has a gunpowder propellant)
+
+	[SerializeField] private List <string> fireMode =  new List <string> {"safe", "single"}; //Default fire modes
 	
 	private bool allowFire = true;
 	private bool allowControl = true;
-	private bool reloaded;
-	private bool allowBurst = true;
+	private bool reloaded = true;
+	private bool reloadInProgress;
+	private bool zoomed;
+	//private bool allowBurst = true;
+	private bool allowModeToggle = true;
+
+	private float defaultView;
+
+	private GameObject playerCamera;
+	private GameObject player;
+
 	
-	private GameObject camera;
-	
-	[SerializeField] private List <string> fireMode =  new List <string> {"safe", "single"}; //Default fire modes
 	
     // Start is called before the first frame update
     void Start()
     {
-		Variables();
+		VariablesAndConstants();
         AddFireModes();
 		CheckReloadAtStart();
+		StoredAmmunition();
     }
 
     // Update is called once per cycle
     void FixedUpdate()
     {
         Fire();
+		MagazineController();
 		Reload();
 		TypeController();
 		AmmunitionController();
-		TempExit();
+		GUICounter(ammunitionCounterUI, ammunitionCount);
+		GUICounter(storedAmmunitionCounterUI, storedAmmunition);
+		GUIMessage(fireModeCounterUI, fireMode[currentMode]);
+		WeaponZoom(zoomFactor);
+		ChangeCrosshairShape();
+		ChangeCrosshairColour();
+		AmmunitionCapacityRestriction();
+		//Debug.DrawRay(new Vector3(player.transform.position.x, player.transform.position.y + 3, player.transform.position.z), playerCamera.transform.TransformDirection(Vector3.forward) * 1000, Color.white);
+		//TempExit();
 		//print(fireMode[currentMode]);
-    }
+	}
 	
 	public string GetFireMode(int index)
 	{
@@ -85,6 +119,36 @@ public class customWeaponController3D : MonoBehaviour
 		return magazineCount;
 	}
 
+	public int GetMagazineCountCapacity()
+	{
+		return magazineCountCapacity;
+	}
+
+	public int GetStoredAmmunition()
+	{
+		return storedAmmunition;
+	}
+
+	public void SetStoredAmmunition(int value)
+	{
+		storedAmmunition = value;
+	}
+
+	public void AddStoredAmmunition(int value)
+	{
+		storedAmmunition += value;
+	}
+
+	public void SetMagazineCount(int value)
+	{
+		magazineCount = value;
+	}
+
+	public void AddMagazineCount(int value)
+	{
+		magazineCount += value;
+	}
+
 	public void SetAmmunitionCount(int value) 
 	{
 		ammunitionCount = value;
@@ -95,11 +159,13 @@ public class customWeaponController3D : MonoBehaviour
 		ammunitionCount += value;
 	}
 
-	private void Variables()
+	private void VariablesAndConstants()
 	{
 		ammunitionCount = magazineAmmunitionCapacity;
 		magazineCount = magazineCountCapacity;
-		camera = GameObject.FindGameObjectWithTag("MainCamera");
+		playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+		player = GameObject.FindGameObjectWithTag("Player");
+		defaultView = playerCamera.GetComponent<Camera>().fieldOfView;
 	}
 	
 	private void TypeController()
@@ -131,6 +197,13 @@ public class customWeaponController3D : MonoBehaviour
 	
 	private void RangedWeapon()
 	{
+		RaycastHit hit;
+		Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
+
+		//Debug.DrawRay(, playerCamera.transform.TransformDirection(Vector3.forward) * 100, Color.red);
+		Debug.DrawLine(playerCamera.transform.position, hit.point, Color.cyan);
+		Debug.DrawLine(firePoint.transform.position, hit.point, Color.red);
+		//print(hit.collider.tag/* + " " + Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity)*/);
 		ToggleFireMode();
 	}
 	
@@ -160,30 +233,32 @@ public class customWeaponController3D : MonoBehaviour
 	
 	private void ShootProjectile()
 	{
-		ammunitionCount -= 1;
-		
+		//print("pew");
 		RaycastHit hit;
+		ammunitionCount -= 1;
 
-		
-		if (Physics.Raycast(camera.transform.position, camera.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+		muzzleFlash.Play();
+
+		if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
 		{
-            firePoint.LookAt(hit.point);
+			firePoint.LookAt(hit.point);
 
-            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-            projectile.GetComponent<BulletScript>().bulletSpeed = speed;
-            projectile.GetComponent<BulletScript>().bulletDamage = damage;
-        } 
+			GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+			projectile.GetComponent<BulletScript>().bulletSpeed = speed;
+			projectile.GetComponent<BulletScript>().bulletDamage = damage;
+		}
 		else
 		{
-            firePoint.LookAt(camera.transform.position + camera.transform.forward * 250);
+			firePoint.LookAt(playerCamera.transform.position + playerCamera.transform.forward * 250);
 
-    		GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-            projectile.GetComponent<BulletScript>().bulletSpeed = speed;
-            projectile.GetComponent<BulletScript>().bulletDamage = damage;
-        }
+			GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+			projectile.GetComponent<BulletScript>().bulletSpeed = speed;
+			projectile.GetComponent<BulletScript>().bulletDamage = damage;
+		}
 		if(ammunitionCount <= 0)
 		{
 			ammunitionCount = 0;
+			allowFire = false;
 		}
 	}
 	
@@ -283,14 +358,14 @@ public class customWeaponController3D : MonoBehaviour
 	
 	private void ToggleFireMode()
 	{
-		if(Input.GetButtonDown("Toggle Fire Mode")/* && allowModeToggle*/)
+		if(Input.GetButtonDown("Toggle Fire Mode") && allowModeToggle)
 		{
 			//print("?");
-			//allowModeToggle = false;
+			allowModeToggle = false;
 			currentMode ++;
 			FireModeController();
 		}
-		//allowModeToggle = true;
+		allowModeToggle = true;
 	}
 	
 	private void AddFireModes()
@@ -317,34 +392,68 @@ public class customWeaponController3D : MonoBehaviour
 
     IEnumerator ReloadTimer()
     {
+		reloadInProgress = true;
         allowFire = false;
         reloaded = false;
         yield return new WaitForSeconds(reloadTime);
-        if (reloaded == false)
+        if (!reloaded)
         {
-            if (magazineCount > 0 && ammunitionCount < magazineAmmunitionCapacity)
+            if (magazineCount > 0 && ammunitionCount < magazineAmmunitionCapacity && storedAmmunition >= magazineAmmunitionCapacity)
             {
-                reloaded = true;
-                magazineCount -= 1;
+				print("r1");
+                //reloaded = true;
+				if (ammunitionCount <= 0)
+				{
+					magazineCount -= 1;
+				}
 				//allow_OOA_Sound = false;
-                ammunitionCount = magazineAmmunitionCapacity;
+				storedAmmunition -= magazineAmmunitionCapacity;
+				storedAmmunition += ammunitionCount;
+				ammunitionCount = magazineAmmunitionCapacity;
             }
-            if (magazineCount <= 0 && ammunitionCount < magazineAmmunitionCapacity)
+			if (magazineCount > 0 && ammunitionCount <= 0 && storedAmmunition >= magazineAmmunitionCapacity)
+			{
+				print("r2");
+				//reloaded = true;
+				magazineCount -= 1;
+				//allow_OOA_Sound = false;
+				storedAmmunition -= magazineAmmunitionCapacity;
+				storedAmmunition += ammunitionCount;
+				ammunitionCount = magazineAmmunitionCapacity;
+			}
+			if(magazineCount > 0 && ammunitionCount < magazineAmmunitionCapacity && storedAmmunition > 0)
             {
-                magazineCount = 0;
+				print("r3");
+				magazineCount = 0;
                 ammunitionCount = 0;
-                /*if (weaponSelected)
-                {
-                    weaponSelected = false;
-                }
-                else
-                {
-                    yield return new WaitForSeconds(0);
-                }*/
-            } 
-			allowFire = true;
+                ammunitionCount = storedAmmunition;
+				storedAmmunition = 0;
+                
+            }
+			else if(magazineCount <= 0 && ammunitionCount < magazineAmmunitionCapacity && storedAmmunition <= 0)
+            {
+				print("r4");
+				magazineCount = 0;
+                ammunitionCount = 0;
+				storedAmmunition = 0;
+            }
         }
-		allowFire = true;
+		if (ammunitionCount > 0)
+		{
+			print("reloaded");
+			reloaded = true;
+		}
+		if (ammunitionCount <= 0 && storedAmmunition <= 0)
+		{
+			reloaded = false;
+			print("out of ammo");
+		}
+
+		if (reloaded) 
+		{
+			allowFire = true;
+		}
+		reloadInProgress = false;
 	}
 	
 	private void CheckReloadAtStart()
@@ -358,24 +467,6 @@ public class customWeaponController3D : MonoBehaviour
 			reloaded = true;
 		}
 	}
-	
-	private void TempExit()
-	{
-		if (Input.GetKey("escape"))
-        {
-			print("yeet!");
-            Quit();
-        }
-	}
-	
-	private void Quit()
-	{
-		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-		#else
-		Application.Quit();
-		#endif
-	}
 
 	private void AmmunitionController() 
 	{
@@ -386,6 +477,146 @@ public class customWeaponController3D : MonoBehaviour
 		if(ammunitionCount <= 0) 
 		{
 			ammunitionCount = 0;
+		}
+		if (magazineCount >= magazineCountCapacity) 
+		{
+			magazineCount = magazineCountCapacity;
+		}
+	}
+
+	private void GUICounter(GameObject target, int value) 
+	{
+		target.GetComponent<Text>().text = "" + value;
+	}
+
+	private void GUIMessage(GameObject target, string message)
+	{
+		target.GetComponent<Text>().text = message;
+	}
+
+	private void StoredAmmunition() 
+	{
+		storedAmmunition = magazineCount * magazineAmmunitionCapacity;
+	}
+
+	private void WeaponZoom(float zoomFactor) 
+	{
+		float zoomedView = defaultView/zoomFactor;
+
+		if (hasZoom) 
+		{
+			if (Input.GetButtonDown("Zoom") && zoomed)
+			{
+				zoomed = false;
+			}
+			else if (Input.GetButtonDown("Zoom") && !zoomed)
+			{
+				zoomed = true;
+			}
+
+			if (zoomed)
+			{
+				playerCamera.GetComponent<Camera>().fieldOfView = zoomedView;
+			}
+			else
+			{
+				playerCamera.GetComponent<Camera>().fieldOfView = defaultView;
+			}
+		}
+	}
+
+	private void ChangeCrosshairShape() 
+	{
+		if (ammunitionCount > 0)
+		{
+			//print("s1");
+			aimingCrosshair.SetActive(true);
+			fireDenialCrosshair.SetActive(false);
+		}
+		
+		if (reloaded)
+		{
+			//print("s2");
+			aimingCrosshair.SetActive(true);
+			reloadCrosshair.SetActive(false);
+		}
+
+		if (ammunitionCount <= 0)
+		{
+			//print("s3");
+			aimingCrosshair.SetActive(false);
+			fireDenialCrosshair.SetActive(true);
+			reloadCrosshair.SetActive(false);
+		}
+
+		if (!reloaded && storedAmmunition > 0 && reloadInProgress) 
+		{
+			//print("s4");
+			aimingCrosshair.SetActive(false);
+			fireDenialCrosshair.SetActive(false);
+			reloadCrosshair.SetActive(true);
+		}
+
+		if (storedAmmunition > 0)
+		{
+			//print("s5");
+			outOfAmmoIndicator.SetActive(false);
+		}
+
+		if (storedAmmunition <= 0 && ammunitionCount <= 0)
+		{
+			//print("s6");
+			outOfAmmoIndicator.SetActive(true);
+		}
+
+	}
+
+	private void ChangeCrosshairColour() 
+	{
+		RaycastHit hit;
+
+		if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+		{
+			if (hit.collider.CompareTag("New Melee Enemy") || hit.collider.CompareTag("Melee Enemy") || hit.collider.CompareTag("Distance Enemy"))
+			{
+				aimingCrosshair.GetComponent<Image>().color = hostileTargetingColour;
+			}
+			else 
+			{
+				aimingCrosshair.GetComponent<Image>().color = neutralTargetingColour;
+			}
+		}
+
+		
+	}
+
+	private void MagazineController() 
+	{
+		if (storedAmmunition > 0)
+		{
+			int replenishedCount = (int)Mathf.Ceil(storedAmmunition / magazineAmmunitionCapacity);
+
+			magazineCount = replenishedCount;
+		}
+
+		if (ammunitionCount > 0 || storedAmmunition > 0 && storedAmmunition <= magazineAmmunitionCapacity) 
+		{
+			magazineCount = 1;
+		}
+	}
+
+	private void AmmunitionCapacityRestriction() 
+	{
+		int storedAmmunitionCapacity = magazineCountCapacity * magazineAmmunitionCapacity;
+
+		if (storedAmmunition >= storedAmmunitionCapacity) 
+		{
+			storedAmmunition = storedAmmunitionCapacity;
+		}
+
+		if (ammunitionCount >= magazineAmmunitionCapacity) 
+		{
+			ammunitionCount = magazineAmmunitionCapacity;
 		}
 	}
 }

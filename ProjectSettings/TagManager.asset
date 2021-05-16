@@ -12,6 +12,8 @@ TagManager:
   - Ignore
   - New Melee Enemy
   - DestroyCrystal
+  - Weapon
+  - Crosshair
   layers:
   - Default
   - TransparentFX
