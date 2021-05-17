@@ -8,7 +8,10 @@ public class CapturePoint : MonoBehaviour
     public GameObject meleeEnemyPrefab;
     public GameObject rangedEnemyPrefab;
     public Transform[] spawnPoints;
+
+    //UI
     public CapturePointUI captureUI;
+    public UIChangeTrigger uiChangeTrigger;
 
     private LockedDoor lockedDoor;
     private bool lockCapturePoint = false;
@@ -25,6 +28,7 @@ public class CapturePoint : MonoBehaviour
     private void Start()
     {
         lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        uiChangeTrigger = GetComponentInChildren<UIChangeTrigger>();
     }
 
     void Update()
@@ -98,7 +102,9 @@ public class CapturePoint : MonoBehaviour
 
         lockCapturePoint = true;
         lockedDoor.IncreaseObjectivesComplete();
-        Debug.Log("Capture complete: " + currentCaptureTime);
+
+        uiChangeTrigger.triggerUIChange(3);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)

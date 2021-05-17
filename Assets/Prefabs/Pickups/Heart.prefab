@@ -92,7 +92,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8631682718398336196}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.16
   m_Height: 0.11655514
@@ -107,10 +107,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8631682718398336196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d442192bfc9744644937d3ed4274258d, type: 3}
+  m_Script: {fileID: 11500000, guid: 63fbd275bafd8f04481ba86d94b089fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBonus: 15
+  heartSound: {fileID: 8300000, guid: a5f9694508fd9464e893a83cdae844a0, type: 3}
+  pickupEffect: {fileID: 8476874279954837175, guid: 3697cfa623bc8f241b4a96f1318d911c, type: 3}
 --- !u!1 &8865490221553524724
 GameObject:
   m_ObjectHideFlags: 0
