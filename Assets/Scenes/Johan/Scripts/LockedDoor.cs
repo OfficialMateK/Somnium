@@ -6,7 +6,8 @@ public class LockedDoor : MonoBehaviour
 {
 
     private int objectivesComplete = 0;
-    public GameObject lightPillar;
+    [SerializeField] private GameObject lightPillar;
+    [SerializeField] private GameObject returnToCastleUI;
 
 
     private void UnlockDoor()
@@ -20,6 +21,7 @@ public class LockedDoor : MonoBehaviour
         objectivesComplete++;
         if(objectivesComplete >= 3)
         {
+            returnToCastleUI.SetActive(true);
             UnlockDoor();
         }
     }
