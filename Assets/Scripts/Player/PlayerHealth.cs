@@ -8,9 +8,11 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public HealthBar healthBar;
+    private Animator anim;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         //healthText.text = health.ToString();
 
         if (PlayerPrefs.HasKey("PlayerHealth"))
@@ -43,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
+        anim.SetTrigger("Hurt"); //player hurt animation
 
         //  healthText.text = health.ToString();
         //Debug.Log("Player: Health Left = " + health);
