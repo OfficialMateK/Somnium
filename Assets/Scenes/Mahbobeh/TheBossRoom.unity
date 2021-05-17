@@ -4391,10 +4391,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1492674556861088359, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
+      propertyPath: sprintSpeed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1492674556861088361, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1556656714}
     - target: {fileID: 1492674556861088362, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
       propertyPath: m_Name
       value: Player
