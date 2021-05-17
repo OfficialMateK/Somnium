@@ -12,6 +12,7 @@ TagManager:
   - Ignore
   - New Melee Enemy
   - DestroyCrystal
+  - Boss
   layers:
   - Default
   - TransparentFX
