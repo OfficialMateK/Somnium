@@ -26,5 +26,8 @@ public class PlayerAnimation : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
             anim.SetTrigger("Shoot");
 
+        if (Input.GetKeyDown(KeyCode.R))
+            anim.SetTrigger("Reload");
+
     }
 }
