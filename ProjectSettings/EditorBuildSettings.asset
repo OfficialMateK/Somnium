@@ -5,24 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Level1_V2/Level 1.unity
-    guid: 26a645a6eca329846a366a3b53959876
-  - enabled: 0
-    path: Assets/Scenes/Level1_V2/Level1_Abyss_Merge.unity
-    guid: 3246b1e761c98e1409b3ad85fa12478e
-  - enabled: 0
-    path: Assets/Scenes/Level1_V2/Level1_SebastianV2_Merge.unity
-    guid: e2d7f14a9bdc97d46a3ec0804a49bca8
-  - enabled: 0
-    path: Assets/Scenes/Level1_V2/Level_2_Dilde.unity
-    guid: aa8e8a7d80b13d4408ec580ca28fabd7
   - enabled: 1
     path: Assets/Scenes/Dilde/Menu.unity
     guid: 314eb49aef349b742b41e6d89c17a1d6
   - enabled: 1
-    path: Assets/Scenes/Level1_V3/Level 1 V3.unity
-    guid: 4c1814fe87a2edf4d93a7ad87cd8eec9
+    path: Assets/Scenes/Level1_V4/Level 1 V4_SistaVersionen.unity
+    guid: 1fffe7117ae3dc447951510fa73557ce
   - enabled: 1
     path: Assets/Scenes/Mahbobeh/TheBossRoom.unity
     guid: 13af23e376a0d9d4bb9efc38990370b2
