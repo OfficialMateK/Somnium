@@ -8244,10 +8244,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpeed: 15
-  attackCooldown: 0.5
+  attackCooldown: 0.2
   distanceUntilShoot: 18
-  distanceUntilMoving: 40
-  bulletSpeed: 30
+  distanceUntilMoving: 50
+  bulletSpeed: 40
   enemyDamage: 20
   enemyHealth: 500
   weaponPoint: {fileID: 2018221394}
