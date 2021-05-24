@@ -8,9 +8,12 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public HealthBar healthBar;
+    public float delayTime = 2f;
+    private Animator anim;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         //healthText.text = health.ToString();
 
         if (PlayerPrefs.HasKey("PlayerHealth"))
@@ -40,9 +43,11 @@ public class PlayerHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            anim.SetTrigger("Death");
+            Invoke("DelayedAction", delayTime);
         }
 
+        anim.SetTrigger("Hurt"); //player hurt animation
 
         //  healthText.text = health.ToString();
         //Debug.Log("Player: Health Left = " + health);
@@ -50,10 +55,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddHealth(int healthToAdd)
     {
-        if(health + healthToAdd > 200)
+        if (health + healthToAdd > 200)
         {
             health = 200;
-        } else
+        }
+        else
         {
             health += healthToAdd;
         }
@@ -71,7 +77,13 @@ public class PlayerHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            anim.SetTrigger("Death");
+            Invoke("DelayedAction", delayTime);
         }
     }
+    void DelayedAction()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
+

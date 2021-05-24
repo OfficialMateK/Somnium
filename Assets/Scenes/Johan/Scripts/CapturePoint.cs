@@ -11,7 +11,7 @@ public class CapturePoint : MonoBehaviour
 
     //UI
     public CapturePointUI captureUI;
-    public UIChangeTrigger uiChangeTrigger;
+    private UIChangeTrigger uiChangeTrigger;
 
     private LockedDoor lockedDoor;
     private bool lockCapturePoint = false;

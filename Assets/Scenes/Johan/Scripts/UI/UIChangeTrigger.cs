@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class UIChangeTrigger : MonoBehaviour
 {
-    public GameObject allObjectivesUI;
-    public GameObject areaUI;
-    public GameObject objective1Text;
-    public GameObject objective2Text;
-    public GameObject objective3Text;
+    [SerializeField] private GameObject allObjectivesUI;
+    [SerializeField] private GameObject areaUI;
+    [SerializeField] private GameObject objective1Text;
+    [SerializeField] private GameObject objective2Text;
+    [SerializeField] private GameObject objective3Text;
 
     private bool insideArea = false;
 
@@ -47,9 +47,12 @@ public class UIChangeTrigger : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        } 
+    }
 
-           
+    public void SetInsideArea()
+    {
+        insideArea = true;
     }
 
 

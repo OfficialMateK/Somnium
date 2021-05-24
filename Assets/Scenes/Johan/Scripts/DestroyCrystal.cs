@@ -11,7 +11,7 @@ public class DestroyCrystal : MonoBehaviour
 
     //UI
     public CrystalUI healthUI;
-    public UIChangeTrigger uiChangeTrigger;
+    private UIChangeTrigger uiChangeTrigger;
 
     private LockedDoor lockedDoor;
     private float currentHealth = 500f;
