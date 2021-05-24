@@ -35,8 +35,45 @@ public class BulletScriptJohan : MonoBehaviour
                 collision.gameObject.GetComponent<MeleeEnemyScript>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case "New Melee Enemy":
                 collision.gameObject.GetComponent<NewMeleeEnemyScript>().Damage(bulletDamage);
+                
+                
                 Destroy(gameObject);
                 break;
             case "Distance Enemy":
@@ -44,7 +81,7 @@ public class BulletScriptJohan : MonoBehaviour
                 Destroy(gameObject);
                 break;
             case "Boss":
-                collision.gameObject.GetComponent<Boss>().Damage(bulletDamage);
+                collision.gameObject.GetComponent<ShootingAiTut>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
             case "Player":

@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 using UnityEngine.AI;
-public class ShootingAiTut : MonoBehaviour
+public class ShootingAiTest : MonoBehaviour
 {
     public NavMeshAgent agent;
 
@@ -64,7 +64,8 @@ public class ShootingAiTut : MonoBehaviour
         if (!walkPointSet) SearchWalkPoint();
 
         //Calculate direction and walk to Point
-        if (walkPointSet){
+        if (walkPointSet)
+        {
             agent.SetDestination(walkPoint);
 
             //Vector3 direction = walkPoint - transform.position;
@@ -87,8 +88,8 @@ public class ShootingAiTut : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint,-transform.up, 2,Ground))
-        walkPointSet = true;
+        if (Physics.Raycast(walkPoint, -transform.up, 2, Ground))
+            walkPointSet = true;
     }
     private void ChasePlayer()
     {
@@ -107,7 +108,8 @@ public class ShootingAiTut : MonoBehaviour
 
         transform.LookAt(player);
 
-        if (!alreadyAttacked){
+        if (!alreadyAttacked)
+        {
 
             //Attack
             Rigidbody rb = Instantiate(projectile, weaponPoint.position, Quaternion.identity).GetComponent<Rigidbody>();

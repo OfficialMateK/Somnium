@@ -18,6 +18,7 @@ public class CustomProjectiles : MonoBehaviour
     [Header("Please attatch components:")]
     public Rigidbody rb;
     public GameObject explosion;
+    public int bulletDamage;
     public LayerMask whatIsEnemies;
 
     [Header("Set the basic stats:")]
@@ -238,49 +239,14 @@ public class CustomProjectiles : MonoBehaviour
             Instantiate(explosion, transform.position, Quaternion.identity);
 
         //Check for enemies and damage them
-        Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, whatIsEnemies);
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            //Damage enemies
-            if (enemies[i].GetComponent<ShootingAi>())
-            enemies[i].GetComponent<ShootingAi>().TakeDamage(explosionDamage);
-
-            //Add explosion force to enemies
-            if (enemies[i].GetComponent<Rigidbody>())
-                enemies[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRange, 2f);
-        }
-
-        //Pearl(Teleport) to position
-        if (objectToTp != null && tpOnExplosion) Pearl(transform.position);
-
-        //Instantiate smoke if attatched
-        if (smokeEffect != null)
-            Instantiate(smokeEffect, transform.position, Quaternion.identity);
+       
 
         //Invoke destruction
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<TrailRenderer>().emitting = false;
         Invoke("Delay", 0.08f);
 
-        //Spawn second bullets and add forces (if second bullet attatched
-        if (secondBullet == null) return;
-
-        for (int i = 0; i < sb_amount; i++)
-        {
-            float x = Random.Range(-1, 1f); float y = Random.Range(-1, 1f); float z = Random.Range(-1, 1f);
-            Vector3 random = new Vector3(x, y, z);
-            Rigidbody sb_rigidbody = Instantiate(secondBullet, transform.position + random, Quaternion.identity).GetComponent<Rigidbody>();
-
-            //Add forces
-            if (sb_forwardForce > 0)
-                sb_rigidbody.AddForce(transform.forward * sb_forwardForce, ForceMode.Impulse);
-            if (sb_upwardForce > 0)
-                sb_rigidbody.AddForce(sb_rigidbody.transform.up * sb_upwardForce, ForceMode.Impulse);
-            if (sb_randomForce > 0)
-                sb_rigidbody.AddForce(random * sb_randomForce, ForceMode.Impulse);
-            
-            sb_amount--;
-        }
+        
     }
     private void Delay()
     {
@@ -288,36 +254,43 @@ public class CustomProjectiles : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (!activated) return;
-
-        //If isVanished && !canStillExplodeWhenVanished stop the function
-        if (isVanished && !canStillExplodeWhenVanished) return;
-
-        //Colliding with other bullet doesn't count
-        ///if (collision.collider.CompareTag("Bullet")) return;
-
-        //Stick to objects, only if not already sticking and switchPlaces is turned off (bug fixing)
-        if (stickToObjects && !sticking && !switchPlaces) 
+        switch (collision.gameObject.tag)
         {
-            sticking = true;
-            stickingPos = transform.position;
-            return;
+            case "Melee Enemy":
+                collision.gameObject.GetComponent<MeleeEnemyScript>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "New Melee Enemy":
+                collision.gameObject.GetComponent<NewMeleeEnemyScript>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "Distance Enemy":
+                collision.gameObject.GetComponent<DistanceEnemyScript>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "Boss":
+                collision.gameObject.GetComponent<ShootingAiTut>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "Player":
+                collision.gameObject.GetComponent<PlayerHealth>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "DestroyCrystal":
+                collision.gameObject.GetComponent<DestroyCrystal>().TakeDamage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "Ignore":
+                break;
+            default:
+                Destroy(gameObject);
+                break;
         }
-
-        //Pearl(Teleport) to position
-        if (objectToTp != null && tpOnFirstCollision)
-        {
-            Pearl(transform.position);
-            tpOnFirstCollision = false;
-            tpOnEveryCollision = false;
-        }
-        if (objectToTp != null && tpOnEveryCollision) Pearl(transform.position);
-
         //Explode on touch
-        if (explodeOnTouch && collision.collider.CompareTag("Enemy")) Explode();
+        Explode();
 
-        //Count up collisions
-        collisions++;
+        
+      
     }
 
     #region Attribute functions

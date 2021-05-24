@@ -1,21 +1,19 @@
-﻿
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-public class ShootingAiTut : MonoBehaviour
+
+public class BossMinion : MonoBehaviour
 {
     public NavMeshAgent agent;
 
     public Transform player;
-
-    public Transform weaponPoint;
-
+    public GameObject gun;
 
     //Stats
-    public int health;
-    public int enemyDamage;
+    public int enemyHealth;
 
     //Check for Ground/Obstacles
-    public LayerMask Ground, Player;
+    public LayerMask whatIsGround, whatIsPlayer;
 
     //Patroling
     public Vector3 walkPoint;
@@ -25,7 +23,6 @@ public class ShootingAiTut : MonoBehaviour
     //Attack Player
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-
 
     //States
     public bool isDead;
@@ -38,7 +35,7 @@ public class ShootingAiTut : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("PlayerObj").transform;
+        player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
     private void Update()
@@ -46,10 +43,10 @@ public class ShootingAiTut : MonoBehaviour
         if (!isDead)
         {
             //Check if Player in sightrange
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
             //Check if Player in attackrange
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, Player);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
             if (!playerInSightRange && !playerInAttackRange) Patroling();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -64,7 +61,8 @@ public class ShootingAiTut : MonoBehaviour
         if (!walkPointSet) SearchWalkPoint();
 
         //Calculate direction and walk to Point
-        if (walkPointSet){
+        if (walkPointSet)
+        {
             agent.SetDestination(walkPoint);
 
             //Vector3 direction = walkPoint - transform.position;
@@ -87,8 +85,8 @@ public class ShootingAiTut : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint,-transform.up, 2,Ground))
-        walkPointSet = true;
+        if (Physics.Raycast(walkPoint, -transform.up, 2, whatIsGround))
+            walkPointSet = true;
     }
     private void ChasePlayer()
     {
@@ -107,16 +105,14 @@ public class ShootingAiTut : MonoBehaviour
 
         transform.LookAt(player);
 
-        if (!alreadyAttacked){
+        if (!alreadyAttacked)
+        {
 
             //Attack
-            Rigidbody rb = Instantiate(projectile, weaponPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
 
-            rb.AddForce(transform.forward * 50f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             rb.AddForce(transform.up * 8, ForceMode.Impulse);
-
-            //GameObject bullet = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation) as GameObject;
-            //bullet.GetComponent<CustomProjectiles>().bulletDamage = enemyDamage;
 
             alreadyAttacked = true;
             Invoke("ResetAttack", timeBetweenAttacks);
@@ -130,22 +126,27 @@ public class ShootingAiTut : MonoBehaviour
 
         alreadyAttacked = false;
     }
-
     public void Damage(int damage)
     {
-        health -= damage;
+        enemyHealth -= damage;
 
-        if (health <= 0)
+        if (enemyHealth <= 0)
         {
-            isDead = true;
-            Invoke("Destroy", 3.0f);
+            StartCoroutine(KillEnemy());
         }
 
-        Debug.Log("Enemy: Health Left: " + health);
+        Debug.Log("Enemy: Health Left: " + enemyHealth);
     }
 
+    private IEnumerator KillEnemy()
+    {
+        //gameObject.SetActive(false);
+        transform.position = new Vector3(0, 3000, 0);
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+    }
 
-    private void Destroy()
+    private void Destroyy()
     {
         Destroy(gameObject);
     }
