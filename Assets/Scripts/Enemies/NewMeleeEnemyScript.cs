@@ -12,9 +12,12 @@ public class NewMeleeEnemyScript : MonoBehaviour
 
     private GameObject player;
     private float attackCooldownTemp;
+    private Animator animator; 
     void Start()
     {
         player = GameObject.Find("PlayerTargetPoint");
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -34,6 +37,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
                     transform.position += transform.forward * enemySpeed * Time.deltaTime;
+                    animator.SetBool("walkForward", true); 
                 }
             }
         }
