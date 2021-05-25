@@ -34,6 +34,7 @@ public class CharacterControllerJohan : MonoBehaviour
     private Animator animator;
 
 
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
