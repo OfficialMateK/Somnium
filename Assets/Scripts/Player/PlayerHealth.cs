@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public HealthBar healthBar;
     public float delayTime = 2f;
     private Animator anim;
+    private AudioSource source;
+    public AudioClip hurtSound;
 
     private void Start()
     {
@@ -48,6 +51,8 @@ public class PlayerHealth : MonoBehaviour
         }
 
         anim.SetTrigger("Hurt"); //player hurt animation
+        //source.PlayOneShot(hurtSound);
+        AudioSource.PlayClipAtPoint(hurtSound, transform.position);
 
         //  healthText.text = health.ToString();
         //Debug.Log("Player: Health Left = " + health);
