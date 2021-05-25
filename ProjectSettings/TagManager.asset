@@ -13,6 +13,7 @@ TagManager:
   - New Melee Enemy
   - DestroyCrystal
   - Boss
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - UI
   - Player
   - Ground
-  - 
+  - Enemy
   - 
   - 
   - 
