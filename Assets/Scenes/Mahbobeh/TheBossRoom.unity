@@ -3720,7 +3720,7 @@ PrefabInstance:
     - target: {fileID: 1492674556861088359, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
       propertyPath: landSound
       value: 
-      objectReference: {fileID: 8300000, guid: 7480fc69dda1b6f498f9b5ead9386b2d, type: 3}
+      objectReference: {fileID: 8300000, guid: 9d89d47c47766e34fbee37fc6ad07173, type: 3}
     - target: {fileID: 1492674556861088359, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
       propertyPath: sprintSpeed
       value: 12
@@ -3769,6 +3769,26 @@ PrefabInstance:
       propertyPath: deathSound
       value: 
       objectReference: {fileID: 8300000, guid: 0959739e3d3cd4f46a963d3463f7e13e, type: 3}
+    - target: {fileID: 1492674556861088361, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
+      propertyPath: hurtSounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492674556861088361, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
+      propertyPath: hurtSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: f911bc71ddd82d342afaa627b9d79e5a, type: 3}
+    - target: {fileID: 1492674556861088361, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
+      propertyPath: hurtSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 60bd5fe3b4f98e644ad769519d739fae, type: 3}
+    - target: {fileID: 1492674556861088361, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
+      propertyPath: hurtSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 75f463b0c8aa3744b84a5a8f288d9fdd, type: 3}
+    - target: {fileID: 1492674556861088361, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
+      propertyPath: hurtSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0672fdb32fe894445bc010158502b7ee, type: 3}
     - target: {fileID: 1492674556861088362, guid: 8e3297d715bf1784d955b7144b6a8489, type: 3}
       propertyPath: m_Name
       value: Player
@@ -11530,7 +11550,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -11640,7 +11660,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -11736,7 +11756,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -11832,7 +11852,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -11928,7 +11948,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -13194,7 +13214,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 564a18690ef15c440b7fe02701e6aa74, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.08
   m_Pitch: 1
   Loop: 1
   Mute: 0
