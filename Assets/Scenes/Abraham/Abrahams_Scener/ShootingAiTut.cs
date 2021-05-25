@@ -6,13 +6,16 @@ public class ShootingAiTut : MonoBehaviour
     public NavMeshAgent agent;
 
     public Transform player;
-    public GameObject gun;
+
+    public Transform weaponPoint;
+
 
     //Stats
     public int health;
+    public int enemyDamage;
 
     //Check for Ground/Obstacles
-    public LayerMask whatIsGround, whatIsPlayer;
+    public LayerMask Ground, Player;
 
     //Patroling
     public Vector3 walkPoint;
@@ -22,6 +25,7 @@ public class ShootingAiTut : MonoBehaviour
     //Attack Player
     public float timeBetweenAttacks;
     bool alreadyAttacked;
+
 
     //States
     public bool isDead;
@@ -34,7 +38,7 @@ public class ShootingAiTut : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("PlayerObj").transform;
         agent = GetComponent<NavMeshAgent>();
     }
     private void Update()
@@ -42,10 +46,10 @@ public class ShootingAiTut : MonoBehaviour
         if (!isDead)
         {
             //Check if Player in sightrange
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
 
             //Check if Player in attackrange
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, Player);
 
             if (!playerInSightRange && !playerInAttackRange) Patroling();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -83,7 +87,7 @@ public class ShootingAiTut : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint,-transform.up, 2,whatIsGround))
+        if (Physics.Raycast(walkPoint,-transform.up, 2,Ground))
         walkPointSet = true;
     }
     private void ChasePlayer()
@@ -106,10 +110,13 @@ public class ShootingAiTut : MonoBehaviour
         if (!alreadyAttacked){
 
             //Attack
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody rb = Instantiate(projectile, weaponPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
 
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 50f, ForceMode.Impulse);
             rb.AddForce(transform.up * 8, ForceMode.Impulse);
+
+            //GameObject bullet = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation) as GameObject;
+            //bullet.GetComponent<CustomProjectiles>().bulletDamage = enemyDamage;
 
             alreadyAttacked = true;
             Invoke("ResetAttack", timeBetweenAttacks);
@@ -123,16 +130,22 @@ public class ShootingAiTut : MonoBehaviour
 
         alreadyAttacked = false;
     }
-    public void TakeDamage(int damage)
+
+    public void Damage(int damage)
     {
         health -= damage;
 
-        if (health < 0){
+        if (health <= 0)
+        {
             isDead = true;
-            Invoke("Destroyy", 2.8f);
+            Invoke("Destroy", 3.0f);
         }
+
+        Debug.Log("Enemy: Health Left: " + health);
     }
-    private void Destroyy()
+
+
+    private void Destroy()
     {
         Destroy(gameObject);
     }

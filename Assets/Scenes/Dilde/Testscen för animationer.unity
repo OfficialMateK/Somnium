@@ -140,11 +140,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d435d15adfe4ba943bf3ce68a8508a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpeed: 0
-  attackCooldown: 0
-  distanceUntilMoving: 0
-  enemyDamage: 0
-  enemyHealth: 0
+  enemySpeed: 8
+  attackCooldown: 2
+  distanceUntilMoving: 60
+  enemyDamage: 20
+  enemyHealth: 100
+--- !u!54 &163295175
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163295171}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &163295176
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163295171}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.8411564
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9205782, z: 0}
+--- !u!1 &217418637 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e31801b3b6a1a04aadff8debb1a9db0, type: 3}
+  m_PrefabInstance: {fileID: 502062603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &217418640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217418637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e38b5dae726cc044a6e554fe759d872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpeed: 1.5
+  attackCooldown: 0.5
+  distanceUntilShoot: 20
+  distanceUntilMoving: 30
+  bulletSpeed: 15
+  enemyDamage: 15
+  enemyHealth: 100
+  weaponPoint: {fileID: 0}
+  bulletPrefab: {fileID: 8923231070435790763, guid: fe71636268c6c854ebb93099378268ea, type: 3}
+--- !u!54 &217418641
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217418637}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &217418642
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217418637}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.8178276
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9089138, z: 0}
 --- !u!1001 &502062603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -310,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e31801b3b6a1a04aadff8debb1a9db0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e31801b3b6a1a04aadff8debb1a9db0, type: 3}
       propertyPath: m_LocalPosition.z
