@@ -4,129 +4,141 @@ using UnityEngine;
 
 public class CharacterControllerJohan : MonoBehaviour
 {
-    public CharacterController controller;
+    //Movement
+    private CharacterController controller;
     public float moveSpeed = 12f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3f;
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-
-    Vector3 verticalVelocity;
     private float horizontalInput;
     private float verticalInput;
-    private float groundedTimer;
+
+    //Dash
+    private float dashSpeedMultiplier;
+    public float dashSpeedMultiplerAmount = 4f;
+    private float dashDuration;
+    public float dashDuratationAmount = 0.11f;
+    private float dashCooldown;
+    public float dashCooldownAmount = 2f;
+    private bool lockInputs;
+
+    //Gravity and Jump
+    public Transform groundCheck;
+    public LayerMask groundMask;
+    private Vector3 verticalVelocity;
     private bool isGrounded;
-    Vector3 movement;
+    private float groundDistance = 0.4f;
+    private float groundedTimer = 0.2f;
+    public float jumpHeight = 1.8f;
+    public float jumpCooldown = 0.2f;  
+    public float gravity = -20f;
 
     //Animation
     private Animator animator;
-    private float animatorSpeed;
-    private float animatorDirection;
 
 
 
     void Start()
     {
+        controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if(isGrounded && verticalVelocity.y < 0)
-        {
-            verticalVelocity.y = -2f;
-        }
-
-        verticalInput = Input.GetAxis("Vertical");
-        horizontalInput = Input.GetAxis("Horizontal");
-
-        Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
-        controller.Move(move * moveSpeed * Time.deltaTime);
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        verticalVelocity.y += gravity * Time.deltaTime;
-        controller.Move(verticalVelocity * Time.deltaTime);
-
-
-        //CheckGravity();
-        //CheckMovement();
-        
-        //ApplyMovement();
-
-
-        // animatorSpeed = Input.GetAxis("Vertical");
-        //animatorDirection = Input.GetAxis("Horizontal");
-
-    }
-
-    /*
-    
-    private void CheckGravity()
-    {
-        isGrounded = controller.isGrounded;
-
-
-        if (isGrounded)
-        {
-            groundedTimer = 0.2f;
-        }
-
-        if(groundedTimer > 0)
-        {
-            groundedTimer -= Time.deltaTime;
-        }
-
-        if(isGrounded && verticalVelocity < 0)
-        {
-            verticalVelocity = 0f;
-        }
-
-        verticalVelocity += gravity * Time.deltaTime;
-
-        //controller.Move(verticalVelocity * Time.deltaTime);
-    }
-
-    private void CheckMovement()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-
-        if (Input.GetButtonDown("Jump") && groundedTimer > 0)
-        {
-            groundedTimer = 0f;
-            verticalVelocity += Mathf.Sqrt(jumpHeight * 2f * gravity);
-        }
-
-        //Flyttar karaktären framåt, bakåt och åt sidorna
-        //Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
-        //Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-        // controller.Move(move * moveSpeed * Time.deltaTime);
-
-
+        ApplyMovement();
+        ApplyGravity();
     }
 
     private void ApplyMovement()
     {
-        Vector3 move = new Vector3(horizontalInput, 0, verticalInput);
-        move *= moveSpeed;
+        //Sätter animation
+        animator.SetFloat("Direction", horizontalInput);
+        animator.SetFloat("Speed", verticalInput);
 
-        if(move.magnitude > 0.05f)
+        //Börjar när spelaren dashar och dashen inte är på cooldown och körs tills dashens slut
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldown <= Time.time || dashDuration > 0 && dashDuration != dashDuratationAmount)
         {
-            gameObject.transform.forward = move;
+            Dash();
+        }
+        else
+        {
+            dashDuration = dashDuratationAmount;
+            dashSpeedMultiplier = 1f;
+            lockInputs = false;
+
+            //Kollar spelarens input för vanlig rörelse
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
         }
 
-        move.y = verticalVelocity;
-        controller.Move(move * Time.deltaTime);
-        //controller.Move(moveSpeed * Time.deltaTime * movement + verticalVelocity * Time.deltaTime);
+        //Flyttar spelaren och normaliserar move så att spelaren inte rör sig snabbare diagonalt med flera knappar nedtryckta
+        Vector3 move = new Vector3(horizontalInput, 0, verticalInput);
+        move = transform.TransformDirection(move.normalized);
+        controller.Move(move * Time.deltaTime * moveSpeed * dashSpeedMultiplier);
+
     }
-    */
-    
+
+    private void Dash()
+    {
+        //"Dashar" genom att öka spelarens movespeed under dashDuration och låsa deras riktning
+        dashDuration -= Time.deltaTime;
+        dashCooldown = Time.time + dashCooldownAmount; //Startar dashens cooldown
+        dashSpeedMultiplier = dashSpeedMultiplerAmount;
+        verticalVelocity.y = 0f; //Stoppar spelarens hopp uppåt så att de inte avslutar hoppet i slutet av dashen
+        
+        //Kollar dashens riktning och låser spelaren till denna
+        if (!lockInputs)
+        {
+            lockInputs = true;
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            verticalInput = Input.GetAxisRaw("Vertical");
+
+            //Om ingen spelaren står stilla defaultar dashen till rakt frammåt
+            if (horizontalInput == 0 && verticalInput == 0)
+            {
+                verticalInput = 1;
+            }
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        //Kollar när spelaren står på marken (Ground i layer) och suger fast dem en del för att inte studsa så mycket
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        //Låter spelaren hoppa en kort stund efter även om de lämnat marken
+        if (isGrounded)
+        {
+            groundedTimer = 0.2f;
+            animator.SetBool("isGrounded", true);
+        }
+        else
+        {
+            groundedTimer -= Time.deltaTime;
+            animator.SetBool("isGrounded", false);
+        }
+
+        if (!lockInputs)
+        {
+            //Vertical velocty är låst till -2 när spelaren står på marken för att suga fast dom lite och göra den mindre studsig
+            if (isGrounded && verticalVelocity.y < 0)
+            {
+                
+                verticalVelocity.y = -2f;
+            }
+
+            //När spelaren hoppar på marken ökar deras verticalVelocity
+            if (Input.GetButtonDown("Jump") && groundedTimer > 0 && jumpCooldown <= Time.time)
+            {
+                jumpCooldown = Time.time + 0.2f;
+                groundedTimer = 0;
+                animator.SetTrigger("Jump");
+                verticalVelocity.y += Mathf.Sqrt(jumpHeight * -3f * gravity);
+            }
+
+            //Drar spelaren neråt över tid efter gravitationen
+            verticalVelocity.y += gravity * Time.deltaTime;
+            controller.Move(verticalVelocity * Time.deltaTime);
+        }
+    } 
 }
