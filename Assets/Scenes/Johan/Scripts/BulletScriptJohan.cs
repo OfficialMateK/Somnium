@@ -47,10 +47,6 @@ public class BulletScriptJohan : MonoBehaviour
                 collision.gameObject.GetComponent<Boss>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
-            case "Player":
-                collision.gameObject.GetComponent<PlayerHealth>().Damage(bulletDamage);
-                Destroy(gameObject);
-                break;
             case "DestroyCrystal":
                 collision.gameObject.GetComponent<DestroyCrystal>().TakeDamage(bulletDamage);
                 Destroy(gameObject);
