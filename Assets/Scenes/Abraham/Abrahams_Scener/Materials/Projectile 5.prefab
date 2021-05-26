@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activated: 1
   rb: {fileID: 5261908539032414032}
-  explosion: {fileID: 1329845292236604, guid: def14fbe0ee21d445bcbe682b46902f1, type: 3}
+  explosion: {fileID: 974175565385545614, guid: d2af6545476a7bb409a7d1749d8aff44, type: 3}
   bulletDamage: 1
   whatIsEnemies:
     serializedVersion: 2
