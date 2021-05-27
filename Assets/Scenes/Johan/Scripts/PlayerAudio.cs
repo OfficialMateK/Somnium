@@ -16,6 +16,7 @@ public class PlayerAudio : MonoBehaviour
 
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip dashSound;
+    [SerializeField] private AudioClip deathSound;
 
     private AudioSource soundSource;
     private float pitchLowRange = 0.95f;
@@ -32,9 +33,11 @@ public class PlayerAudio : MonoBehaviour
 
     private void SwapAndPlaySound(AudioClip[] sound, int soundIndex)
     {
+        //Slumpar pitch och volym
         soundSource.pitch = Random.Range(pitchLowRange, pitchHighRange);
         float volume = Random.Range(volumeLowRange, volumeHighRange);
 
+        //Ignorerar första index, byter sedan plats på den och ljudet som spelades för att undvika upprepning
         AudioClip clip = sound[soundIndex];
         soundSource.PlayOneShot(clip, volume);
         sound[soundIndex] = sound[0];
@@ -69,36 +72,12 @@ public class PlayerAudio : MonoBehaviour
     {
         hurtSoundsIndex = Random.Range(1, hurtSounds.Length);
         SwapAndPlaySound(hurtSounds, hurtSoundsIndex);
-        /*
-        //Slumpar pitch och volym
-        hurtSoundsIndex = Random.Range(0, hurtSounds.Length);
-        soundSource.pitch = Random.Range(pitchLowRange, pitchHighRange);
-        float volume = Random.Range(volumeLowRange, volumeHighRange);
-
-        //Ignorerar första index, byter sedan plats på den och ljudet som spelades för att undvika upprepning
-        AudioClip clip = hurtSounds[hurtSoundsIndex];
-        soundSource.PlayOneShot(clip, volume);
-        hurtSounds[hurtSoundsIndex] = hurtSounds[0];
-        hurtSounds[0] = clip;
-        */
     }
 
     private void PlayLandSound()
     {
         landSoundsIndex = Random.Range(1, landSounds.Length);
         SwapAndPlaySound(landSounds, landSoundsIndex);
-        /*
-        //Slumpar pitch och volym
-        landSoundsIndex = Random.Range(0, landSounds.Length);
-        soundSource.pitch = Random.Range(pitchLowRange, pitchHighRange);
-        float volume = Random.Range(volumeLowRange, volumeHighRange);
-
-        //Ignorerar första index, byter sedan plats på den och ljudet som spelades för att undvika upprepning
-        AudioClip clip = landSounds[landSoundsIndex];
-        soundSource.PlayOneShot(clip, volume);
-        landSounds[landSoundsIndex] = landSounds[0];
-        landSounds[0] = clip;
-        */
     }
 
     public void PlayJumpSound()
@@ -112,6 +91,11 @@ public class PlayerAudio : MonoBehaviour
     public void PlayDashSound()
     {
         soundSource.PlayOneShot(dashSound, 1);
+    }
+
+    public void PlayDeathSound()
+    {
+        soundSource.PlayOneShot(deathSound, 1);
     }
 
 
