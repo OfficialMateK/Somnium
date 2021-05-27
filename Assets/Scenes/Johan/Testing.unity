@@ -17594,6 +17594,7 @@ GameObject:
   - component: {fileID: 1121420366}
   - component: {fileID: 6891803920760514553}
   - component: {fileID: 1121420368}
+  - component: {fileID: 1121420372}
   - component: {fileID: 1121420371}
   m_Layer: 0
   m_Name: Player (2)
@@ -17618,8 +17619,6 @@ MonoBehaviour:
   dashSpeedMultiplerAmount: 4
   dashDuratationAmount: 0.11
   dashCooldownAmount: 2
-  dashTrail: {fileID: 636038311}
-  leafParticles: {fileID: 1467406227}
   groundCheck: {fileID: 2131111533}
   groundMask:
     serializedVersion: 2
@@ -17809,6 +17808,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1121420372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121420365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f88dbbf71efaf48b9c7dc303dac465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashTrail: {fileID: 636038311}
+  leafParticles: {fileID: 1467406227}
 --- !u!1 &1121823434
 GameObject:
   m_ObjectHideFlags: 0
@@ -19245,9 +19258,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467406224}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -0.024999801, y: -0.109000206, z: -0.0439995}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.024999801, y: -0.15, z: -0.006}
+  m_LocalScale: {x: 1, y: 0.66752, z: 1}
   m_Children: []
   m_Father: {fileID: 1124497425}
   m_RootOrder: 0
@@ -19328,13 +19341,13 @@ ParticleSystem:
   serializedVersion: 7
   lengthInSec: 0.85
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -19401,8 +19414,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 6
-      minScalar: 4
+      scalar: 12
+      minScalar: 8
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -19454,8 +19467,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 1
+      scalar: 4
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -19512,7 +19525,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.3009968, g: 0.7169812, b: 0.3527011, a: 1}
-        key1: {r: 0.9622642, g: 0.6459077, b: 0.45843717, a: 1}
+        key1: {r: 0.5283019, g: 0.29312035, b: 0.15201138, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -19520,7 +19533,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 65535
+        ctime1: 56669
         ctime2: 0
         ctime3: 0
         ctime4: 0
@@ -20647,8 +20660,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 0.7254902}
-        key1: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0.62352943}
+        key0: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
+        key1: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -20664,7 +20677,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 34502
+        atime1: 41056
         atime2: 65535
         atime3: 65535
         atime4: 0
@@ -37064,8 +37077,6 @@ MonoBehaviour:
   dashSpeedMultiplerAmount: 0
   dashDuratationAmount: 0
   dashCooldownAmount: 0
-  dashTrail: {fileID: 0}
-  leafParticles: {fileID: 0}
   groundCheck: {fileID: 380471847}
   groundMask:
     serializedVersion: 2
@@ -39729,7 +39740,6 @@ MonoBehaviour:
   health: 200
   healthBar: {fileID: 3082095949305888050}
   delayTime: 2
-  hurtSound: {fileID: 0}
 --- !u!1 &6922331400340553521
 GameObject:
   m_ObjectHideFlags: 0
