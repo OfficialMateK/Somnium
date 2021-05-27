@@ -50,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
         {
             anim.SetTrigger("Death");
             Invoke("DelayedAction", delayTime);
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
 
         anim.SetTrigger("Hurt"); //player hurt animation
