@@ -11,12 +11,14 @@ public class PlayerHealth : MonoBehaviour
     public HealthBar healthBar;
     public float delayTime = 2f;
     private Animator anim;
-    private AudioSource source;
-    public AudioClip hurtSound;
+    private PlayerAudio playerAudio;
+    //private AudioSource source;
+   // public AudioClip hurtSound;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        playerAudio = GetComponent<PlayerAudio>();
         //healthText.text = health.ToString();
 
         if (PlayerPrefs.HasKey("PlayerHealth"))
@@ -51,8 +53,10 @@ public class PlayerHealth : MonoBehaviour
         }
 
         anim.SetTrigger("Hurt"); //player hurt animation
+        playerAudio.PlayHurtSound();
+
         //source.PlayOneShot(hurtSound);
-        AudioSource.PlayClipAtPoint(hurtSound, transform.position);
+        //AudioSource.PlayClipAtPoint(hurtSound, transform.position);
 
         //  healthText.text = health.ToString();
         //Debug.Log("Player: Health Left = " + health);
