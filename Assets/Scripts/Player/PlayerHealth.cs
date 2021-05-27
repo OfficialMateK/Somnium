@@ -12,8 +12,6 @@ public class PlayerHealth : MonoBehaviour
     public float delayTime = 2f;
     private Animator anim;
     private PlayerAudio playerAudio;
-    //private AudioSource source;
-   // public AudioClip hurtSound;
 
     private void Start()
     {
@@ -49,8 +47,8 @@ public class PlayerHealth : MonoBehaviour
         if (health <= 0)
         {
             anim.SetTrigger("Death");
+            playerAudio.PlayDeathSound();
             Invoke("DelayedAction", delayTime);
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
 
         anim.SetTrigger("Hurt"); //player hurt animation
