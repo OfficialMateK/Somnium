@@ -12,7 +12,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
 
     private GameObject player;
     private float attackCooldownTemp;
-    private Animator animator; 
+    private Animator anim; 
     void Start()
     {
         player = GameObject.Find("PlayerTargetPoint");
