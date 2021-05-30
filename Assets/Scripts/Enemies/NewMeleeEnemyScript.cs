@@ -17,7 +17,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
     {
         player = GameObject.Find("PlayerTargetPoint");
 
-        animator = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -37,7 +37,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
                     transform.position += transform.forward * enemySpeed * Time.deltaTime;
-                    animator.SetBool("walkForward", true); 
+                    anim.SetBool("walkForward", true); 
                 }
             }
         }
