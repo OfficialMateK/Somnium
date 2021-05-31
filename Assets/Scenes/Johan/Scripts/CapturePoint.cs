@@ -27,7 +27,7 @@ public class CapturePoint : MonoBehaviour
 
     private void Start()
     {
-        lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        //lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
         uiChangeTrigger = GetComponentInChildren<UIChangeTrigger>();
     }
 
