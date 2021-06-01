@@ -41,110 +41,16 @@ public class CustomProjectiles : MonoBehaviour
     public int sb_amount;
     public float sb_forwardForce, sb_upwardForce, sb_randomForce;
 
-    //Grow
-    [Header("[Attribute] - Grow")]
-    [Header("Special attributes, activating often overrides other properties!")]
-    [Space(7)]
-    public float scaleGrowingSpeed;
-    public float damageGrowingSpeed;
-    public float maxScale;
-    [Tooltip("Needs to be bigger than explosion damage variable")]
-    public float maxDamage;
+   
 
-    //Stick to objects
-    [Header("[Attribute] - StickToObjects")]
-    [Space(7)]
-    public bool stickToObjects;
-    public bool checkForEnemies;
-    public float checkRange;
-    bool sticking;
-    Vector3 stickingPos;
+  
 
-    //Spawner
-    [Header("[Attribute] - Spawner")] 
-    [Space(5)]
-    [Tooltip("Can be literally anything, feel free to make your bullet spawn houses if you want... :D")]
-    public GameObject objectToSpawn;
-    public float timeBetweenSpawns;
-    [Tooltip("Normally at transform.position, if you attatch points it will choose one of the attatched randomly")]
-    public Transform[] preferredSpawnPoints;
-    [Tooltip("If you want infinite spawns just set to something like 9999")]
-    public int maxSpawnAmount;
-    float currentTimeBetweenSpawns;
+    
 
-    //Pearl
-    [Header("[Attribute] - Pearl (Ender pearl)")]
-    [Space(7)]
-    [Tooltip("Could be everything, but normally the player, you need to type in the exact name of the object")]
-    public string nameOfObjectToTp;
-    Transform objectToTp;
-    public bool tpOnFirstCollision;
-    public bool tpOnEveryCollision;
-    public bool tpOnExplosion;
-    [Tooltip("switches places of your objectToTp and the bullet itself, commonly used together with sticky bullets")]
-    public bool switchPlaces;
+   
+   
 
-    //Vanish
-    [Header("[Attribute] - Vanish--Appear")]
-    [Space(7)]
-    public float timeBeforeVanish;
-    public float timeBetweenVanishAndAppear;
-    public bool dontAppearAgain;
-    public bool canStillExplodeWhenVanished;
-    public bool canTravelThroughtWallsWhileVanished;
-    public bool repeat;
-
-    //Auto-Aim
-    [Header("[Attribute] - Auto-Aim")]
-    [Space(7)]
-    public bool useSmoothAutoAim;
-    public bool useInsaneAutoAim;
-    public float autoAimIntensity;
-    [Tooltip("The range in which enemies get detected and aimed at")]
-    public float autoAimDetectRange;
-    [Tooltip("The range in which the auto aim stops again (if you don't want that set it to 0)")]
-    public float autoAimStopRange;
-
-    //Drop down
-    [Header("[Attribute] - Drop down")]
-    [Space(7)]
-    public float timeBeforeDropping;
-    [Tooltip("Let's the bullet wait mid air before dropping")]
-    public float waitMidAir;
-    [Tooltip("By setting a negative value the bullets rises up instead")]
-    public float dropForce;
-    [Tooltip("Highly recommended :D")]
-    public bool explodeDirectlyAfterDrop = true;
-
-    //Smoke
-    [Header("[Attribute] - Smoke")]
-    [Space(7)]
-    public GameObject smokeEffect;
-
-    //Custom gravity
-    [Header("[Attribute] - Custom gravity")]
-    [Space(7)]
-    public bool useCustomGravity;
-    public Vector3 gravityDirection;
-    public float gravityStrength;
-
-    //Player dash
-    [Header("[Attribute] - Player Dash")]
-    public string playerObjectName;
-    private GameObject player;
-    public float dashForce;
-    [Min(0.2f)]
-    [Tooltip("Make it at least 0.2f")]
-    public float dashDelay = 0.2f;
-
-    //Charge
-    [Header("[Attribute] - Charge")]
-    [Min(0.2f)]
-    [Tooltip("Needs to be over 0.2f")]
-    public float chargeTime;
-    [Tooltip("How much the velocity get's boosted after charging")]
-    public float chargedVelocityMultiplier;
-    Vector3 savedVelocity;
+    
 
 
     private int collisions;
@@ -158,31 +64,8 @@ public class CustomProjectiles : MonoBehaviour
     {
         Setup();
 
-        currentTimeBetweenSpawns = timeBetweenSpawns;
-
-        //Find player and call dash function (if activated)
-        if (playerObjectName.Length > 0) player = GameObject.Find("PlayerObj");
-        if (player != null) Invoke("PlayerDash", dashDelay);
-
-        //Charge
-        if (chargeTime > 0) StartCoroutine(SaveVelocity());
-
-        //Set object to tp
-        if (nameOfObjectToTp.Length != 0)
-        objectToTp = GameObject.Find(nameOfObjectToTp).transform;
-
-        //fixing the bug of sticky bullets instant exploding when switching places
-        if (checkForEnemies && switchPlaces && tpOnFirstCollision || tpOnEveryCollision)
-        {
-            checkForEnemies = false;
-            turnCheckForEnemyOnAgain = true;
-        }
-
-        //Set timers
-        if (timeBeforeVanish > 0)
-            currentTimeBeforeVanish = timeBeforeVanish;
-        if (timeBetweenVanishAndAppear > 0)
-            currentTimeBetweenVanishAndAppear = timeBetweenVanishAndAppear;
+        
+        
     }
 
     /// Here are all functions called (except Setup), it works always the same,
@@ -196,19 +79,10 @@ public class CustomProjectiles : MonoBehaviour
         maxLifetime -= Time.deltaTime;
         if (maxLifetime <= 0 && activated) Explode();
 
-        if (sticking) StickToObject();
+       
+        
 
-        if (objectToSpawn != null) Spawner();
 
-        if (scaleGrowingSpeed > 0 || damageGrowingSpeed > 0) Grow();
-
-        if (timeBeforeVanish != 0) Vanish();
-
-        if (useSmoothAutoAim || useInsaneAutoAim) AutoAim();
-
-        if (timeBeforeDropping != 0) DropDown();
-
-        if (useCustomGravity) CustomGravity();
     }
 
     ///Just to set the basic variables of the bullet/projectile
@@ -269,7 +143,7 @@ public class CustomProjectiles : MonoBehaviour
                 Destroy(gameObject);
                 break;
             case "Boss":
-                collision.gameObject.GetComponent<ShootingAiTut>().Damage(bulletDamage);
+                collision.gameObject.GetComponent<EnemyAiSHoot>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
             case "Player":
@@ -289,266 +163,15 @@ public class CustomProjectiles : MonoBehaviour
         //Explode on touch
         Explode();
 
-        
+        Destroy(gameObject, 1);
       
     }
 
-    #region Attribute functions
-
-    float growingTime = 0;
-    private void Grow()
-    {
-        //grow in size 
-        if (transform.localScale.x < maxScale)
-        transform.localScale += Vector3.one * Time.deltaTime * scaleGrowingSpeed;
-
-        //Damage requires an integer, so we need to increase it a bit differently
-        if (explosionDamage < maxDamage)
-        {
-            growingTime += Time.deltaTime * damageGrowingSpeed;
-            if (growingTime >= 1)
-            {
-                //increase damage by one
-                explosionDamage++;
-                growingTime = 0;
-            }
-        }
-
-        //If negative scaleGrowningSpeed (shrinking), destroy at scale 0
-        if (transform.localScale.x <= 0) Explode();
-    }
-
-    private void StickToObject()
-    {
-        if (rb.useGravity == true) rb.useGravity = false;
-
-        transform.position = stickingPos;
-
-        //Check for enemies
-        if (checkForEnemies && Physics.CheckSphere(transform.position, checkRange, whatIsEnemies))
-        {
-            Explode();
-        }
-    }
-
-    private void Spawner()
-    {
-        //Count down timer
-        currentTimeBetweenSpawns -= Time.deltaTime;
-        //Spawn objects
-        if (currentTimeBetweenSpawns <= 0 && maxSpawnAmount > 0)
-        {
-            if (preferredSpawnPoints.Length == 0) Instantiate(objectToSpawn, transform.position, Quaternion.identity);
-
-            //If spawnpoints attatched choose one random
-            if (preferredSpawnPoints.Length > 0)
-                Instantiate(objectToSpawn, preferredSpawnPoints[Random.Range(0,preferredSpawnPoints.Length)].position, Quaternion.identity);
-
-            //count down spawnAmount
-            maxSpawnAmount--;
-            //reset timer
-            currentTimeBetweenSpawns = timeBetweenSpawns;
-        }
-    }
-
-    bool turnCheckForEnemyOnAgain;
-    private void Pearl(Vector3 teleportPosition)
-    {
-        if (switchPlaces) transform.position = objectToTp.position;
-        if (stickToObjects)
-        {
-            stickingPos = objectToTp.position;
-            sticking = true;
-
-            //bug fixing
-            if (turnCheckForEnemyOnAgain) Invoke("TurnCheckForEnemiesOnAgain", 0.1f);
-        }
-
-        objectToTp.position = teleportPosition;
-    }
-    private void TurnCheckForEnemiesOnAgain()
-    {
-        checkForEnemies = true;
-    }
-
-    bool isVanished;
-    float currentTimeBeforeVanish, currentTimeBetweenVanishAndAppear;
-    private void Vanish()
-    {
-        //Count down timer and start vanishing when timer at 0
-        if (!isVanished)
-            currentTimeBeforeVanish -= Time.deltaTime;
-
-        if (currentTimeBeforeVanish <= 0)
-        {
-            //Make invisible
-            GetComponent<MeshRenderer>().enabled = false;
-            GetComponent<TrailRenderer>().enabled = false;
-
-            //Disable collider to travel through walls (if activated)
-            if (canTravelThroughtWallsWhileVanished) GetComponent<SphereCollider>().enabled = false;
-
-            isVanished = true;
-
-            //Reset timer
-            currentTimeBeforeVanish = timeBeforeVanish;
-        }
-
-        if (isVanished && !dontAppearAgain)
-        {
-            currentTimeBetweenVanishAndAppear -= Time.deltaTime;
-        }
-
-        //Appear again
-        if (currentTimeBetweenVanishAndAppear <= 0)
-        {
-            //Make visible
-            GetComponent<MeshRenderer>().enabled = true;
-            GetComponent<TrailRenderer>().enabled = true;
-
-            //Enable collider to travel through walls (if activated)
-            if (canTravelThroughtWallsWhileVanished) GetComponent<SphereCollider>().enabled = true;
-
-            isVanished = false;
-
-            //Reset timer
-            currentTimeBetweenVanishAndAppear = timeBetweenVanishAndAppear;
-
-            //Stop function (Don't repeat again)
-            if (!repeat) timeBeforeVanish = 0;
-        }
-    }
-
-    private void AutoAim()
-    {
-        //Check for enemies in range
-        Collider[] enemies = Physics.OverlapSphere(transform.position, autoAimDetectRange, whatIsEnemies);
-
-        //Add force towards the first enemy
-        if (enemies.Length > 0)
-        {
-            //Calculate direction vector
-            Vector3 dirToEnemy = enemies[0].transform.position - transform.position;
-
-            if (useSmoothAutoAim)
-            rb.AddForce(dirToEnemy.normalized * Time.deltaTime * autoAimIntensity * 20);
-
-            if (useInsaneAutoAim)
-            rb.velocity = dirToEnemy.normalized * Time.deltaTime * autoAimIntensity * 30;
-
-            ///other tries
-            ///rb.AddForce(dirToEnemy.normalized * Time.deltaTime * autoAimIntensity, ForceMode.VelocityChange);
-            ///rb.velocity += dirToEnemy.normalized * Time.deltaTime * autoAimIntensity;
-        }
-
-        //Stop when needed
-        if (Physics.CheckSphere(transform.position, autoAimStopRange, whatIsEnemies))
-        {
-            useInsaneAutoAim = false;
-            useSmoothAutoAim = false;
-        }
-    }
-
-    private void DropDown()
-    {
-        //start timer
-        timeBeforeDropping -= Time.deltaTime;
-
-        //Add downward force
-        if (timeBeforeDropping <= 0)
-        {
-            //Just that the if statement only runs once
-            timeBeforeDropping = 100;
-
-            //Set velocity to 0 first and deactivate gravity (only if the drop force is positive)
-            if (dropForce > 0)
-            rb.useGravity = false;
-            rb.velocity = Vector3.zero;
-
-            //Whait mid air if needed and add force
-            if (waitMidAir == 0)
-                rb.AddForce(Vector3.down * dropForce, ForceMode.Impulse);
-            else
-                Invoke("LateDropDown", waitMidAir);
-
-            //Make sure bullet explodes on next ground touch
-            if (explodeDirectlyAfterDrop) Invoke("WaitABitLol", 0.2f + waitMidAir);
-        }
-    }
-    private void LateDropDown() { rb.AddForce(Vector3.down * dropForce, ForceMode.Impulse); }
-    private void WaitABitLol() { collisions = maxCollisions - 1; }
+   
+    
 
    
+   
 
-    private IEnumerator SaveVelocity()
-    {
-        yield return new WaitForSeconds(0.025f);
-        savedVelocity = rb.velocity;
-        yield return new WaitForEndOfFrame();
-        rb.velocity = Vector3.zero;
-        rb.useGravity = false;
-        Invoke("ChargeFinished", chargeTime - 0.03f);
-    }
-    private void ChargeFinished()
-    {
-        rb.useGravity = useGravity;
-        rb.velocity = savedVelocity * chargedVelocityMultiplier;
-    }
-
-    private void CustomGravity()
-    {
-        //Deactivate normal gravity
-        if (rb.useGravity) rb.useGravity = false;
-
-        //Add gravity force
-        rb.AddForce(gravityDirection.normalized * gravityStrength * Time.deltaTime * 20);
-    }
-
-    #endregion
-
-    ///Just for visualizing a few variables
-    #region Debugging
-    private void OnDrawGizmosSelected()
-    {
-        //visualize the explosion range
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRange);
-    }
-
-    #endregion
-
-    /// The setters need to be here that the slider Ui works, 
-    /// if you don't need the ingame sliders anyway, just delete them :D
-    #region Setters
-
-    public void SetBounciness(float v)
-    {
-        bounciness = v;
-    }
-    public void SetGravity(float v)
-    {
-        if (v == 1) useGravity = true;
-        else useGravity = false;
-    }
-    public void SetMaxCollisions(float v)
-    {
-        int _v = Mathf.RoundToInt(v);
-        maxCollisions = _v;
-    }
-    public void SetMaxLifetime(float v)
-    {
-        int _v = Mathf.RoundToInt(v);
-        maxLifetime = _v;
-    }
-    public void SetExplosionRange(float v)
-    {
-        explosionRange = v;
-    }
-    public void SetExplosionDamage(float v)
-    {
-        int _v = Mathf.RoundToInt(v);
-        explosionDamage = _v;
-    }
-
-    #endregion
+  
 }
