@@ -11,6 +11,9 @@ public class EnemyAiSHoot : MonoBehaviour
     public LayerMask Ground, Player;
     public Animator animator;
     public UIHealthBar healthbar;
+    public ParticleSystem deathParticle;
+
+
     public float enemyHealth;
     public float maxhealth;
 
@@ -162,6 +165,7 @@ public class EnemyAiSHoot : MonoBehaviour
         
         Destroy(gameObject);
         healthbar.gameObject.SetActive(false);
+        Instantiate(deathParticle, transform.position, transform.rotation);
     }
 
 
