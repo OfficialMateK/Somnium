@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject controls;
+    public GameObject options;
+    public GameObject crosshair;
 
 
 
@@ -32,6 +34,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        crosshair.SetActive(true);
+        options.SetActive(false);
         controls.SetActive(false);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
@@ -41,6 +45,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
+        crosshair.SetActive(false);
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         Cursor.visible = true;
