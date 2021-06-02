@@ -415,7 +415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1505bf6f13182245bc3fd8b80a1603d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.25
+      value: 5.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c1505bf6f13182245bc3fd8b80a1603d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -476,21 +476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87cdf47c245b2049b51ff6dcb2f29c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 538709333775549926}
-  Player:
-    serializedVersion: 2
-    m_Bits: 64
-  agent: {fileID: 2139575849}
-  enemyHealth: 100
-  maxHealth: 100
-  walk: {x: 0, y: 0, z: 0}
-  walkRange: 0
-  coolDown: 0
-  warHammer: {fileID: 0}
-  sight: 40
-  attack: 5
-  playerInSight: 0
-  playerInAttack: 0
 --- !u!195 &2139575849
 NavMeshAgent:
   m_ObjectHideFlags: 0
