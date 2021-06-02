@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 960804574}
   - component: {fileID: 237603598}
   - component: {fileID: 656197957}
+  - component: {fileID: 209566422}
   m_Layer: 0
   m_Name: Tentacle 1
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 7074527242272462309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.1687567, y: 4.2131786, z: 3.1687567}
+  m_LocalScale: {x: 3.1687567, y: 3.1687567, z: 3.1687567}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -138,6 +139,20 @@ MeshCollider:
   m_CookingOptions: 30
   m_Mesh: {fileID: -6429578166948570785}
 --- !u!64 &656197957
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074527242272462309}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6429578166948570785}
+--- !u!64 &209566422
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
