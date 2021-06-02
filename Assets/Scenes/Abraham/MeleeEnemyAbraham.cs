@@ -20,7 +20,6 @@ public class MeleeEnemyAbraham : MonoBehaviour
     //public Slider slider;
     public float enemyHealth;
     public float maxhealth;
-    public int enemyDamage;
 
 
 
@@ -32,7 +31,7 @@ public class MeleeEnemyAbraham : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-   
+    public GameObject projectile;
 
     //States
     public float sightRange, attackRange;
@@ -61,7 +60,7 @@ public class MeleeEnemyAbraham : MonoBehaviour
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-     // if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (playerInAttackRange && playerInSightRange) AttackPlayer();
 
 
     }
@@ -107,38 +106,28 @@ public class MeleeEnemyAbraham : MonoBehaviour
         animator.SetFloat("Speed",1);
     }
 
-    private void OnTriggerStay(Collider other)
+
+    private void AttackPlayer()
     {
-        if (other.gameObject.CompareTag("Player"))
+        //Make sure enemy doesent move
+        agent.SetDestination(transform.position);
+
+        transform.LookAt(player);
+
+        if (!alreadyAttacked)
         {
+
             
-                Debug.Log("Enemy: Hit Player");
-                other.GetComponent<PlayerHealth>().Damage(enemyDamage);
-                
-            
+            animator.SetFloat("Speed", 2);
+
+
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+
+
     }
-
-
-
-
-    // private void AttackPlayer(Collider other)
-    // {
-    //     //Make sure enemy doesent move
-    //     agent.SetDestination(transform.position);
-    //
-    //     transform.LookAt(player);
-    //
-    //     if (other.gameObject.CompareTag("Player"))
-    //    {
-    //         other.GetComponent<PlayerHealth>().Damage(enemyDamage);
-
-    //     }
-
-
-
-
-    // }
 
 
 
