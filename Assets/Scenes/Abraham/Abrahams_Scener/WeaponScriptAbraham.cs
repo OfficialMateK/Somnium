@@ -19,13 +19,16 @@ public class WeaponScriptAbraham : MonoBehaviour
 
     int bulletsLeft, bulletsShot;
 
-   
+    //Audio
+    [SerializeField] private AudioClip shootSound;
+
+
 
     //bools
     bool shooting, readyToShoot, reloading;
 
     //Reference
-    public Camera fpsCam;
+    public Camera tpsCam;
     public Transform attackPoint;
 
     //Graphics
@@ -55,6 +58,7 @@ public class WeaponScriptAbraham : MonoBehaviour
         //Check if allowed to hold down button and take corresponding input
         if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        
 
         //Reloading 
         if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
@@ -75,8 +79,10 @@ public class WeaponScriptAbraham : MonoBehaviour
     {
         readyToShoot = false;
 
+        AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.1f);
+
         //Find the exact hit position using a raycast
-        Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
+        Ray ray = tpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
         RaycastHit hit;
 
         //check if ray hits something
@@ -103,7 +109,7 @@ public class WeaponScriptAbraham : MonoBehaviour
 
         //Add forces to bullet
         currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
+        currentBullet.GetComponent<Rigidbody>().AddForce(tpsCam.transform.up * upwardForce, ForceMode.Impulse);
 
         //Instantiate muzzle flash, if you have one
         if (muzzleFlash != null)

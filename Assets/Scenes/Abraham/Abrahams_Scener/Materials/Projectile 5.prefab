@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5261908539032414034}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300002, guid: 8233791bab55837408982f359042ae45, type: 3}
 --- !u!23 &5261908539032414062
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb54088e4fe82ce44aafb5f3dc12b530, type: 2}
+  - {fileID: 2100000, guid: 5c659af30ba44a144b1ec8f4ba11c459, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -129,10 +129,10 @@ MonoBehaviour:
   activated: 1
   rb: {fileID: 5261908539032414032}
   explosion: {fileID: 974175565385545614, guid: d2af6545476a7bb409a7d1749d8aff44, type: 3}
-  bulletDamage: 1
+  bulletDamage: 10
   whatIsEnemies:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   bounciness: 0.5
   useGravity: 1
   explosionDamage: 0
@@ -146,46 +146,6 @@ MonoBehaviour:
   sb_forwardForce: 0
   sb_upwardForce: 0
   sb_randomForce: 0
-  scaleGrowingSpeed: 0
-  damageGrowingSpeed: 0
-  maxScale: 0
-  maxDamage: 0
-  stickToObjects: 0
-  checkForEnemies: 0
-  checkRange: 0
-  objectToSpawn: {fileID: 0}
-  timeBetweenSpawns: 0
-  preferredSpawnPoints: []
-  maxSpawnAmount: 0
-  nameOfObjectToTp: 
-  tpOnFirstCollision: 0
-  tpOnEveryCollision: 0
-  tpOnExplosion: 0
-  switchPlaces: 0
-  timeBeforeVanish: 0
-  timeBetweenVanishAndAppear: 0
-  dontAppearAgain: 0
-  canStillExplodeWhenVanished: 0
-  canTravelThroughtWallsWhileVanished: 0
-  repeat: 0
-  useSmoothAutoAim: 0
-  useInsaneAutoAim: 0
-  autoAimIntensity: 0
-  autoAimDetectRange: 0
-  autoAimStopRange: 0
-  timeBeforeDropping: 0
-  waitMidAir: 0
-  dropForce: 0
-  explodeDirectlyAfterDrop: 1
-  smokeEffect: {fileID: 0}
-  useCustomGravity: 0
-  gravityDirection: {x: 0, y: 0, z: 0}
-  gravityStrength: 0
-  playerObjectName: 
-  dashForce: 0
-  dashDelay: 0.2
-  chargeTime: 0
-  chargedVelocityMultiplier: 0
   alreadyExploded: 0
 --- !u!96 &1092911032284006343
 TrailRenderer:
@@ -236,8 +196,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0030899048
-        value: 0.41729927
+        time: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -246,20 +206,20 @@ TrailRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0
-        inSlope: -0.86715496
-        outSlope: -0.86715496
+        value: 1
+        inSlope: -0
+        outSlope: -0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.07154191
+        inWeight: 0.14723927
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 1, b: 0.038090706, a: 1}
-      key1: {r: 0, g: 0.38679248, b: 0.010026642, a: 1}
+      key0: {r: 0, g: 0.95924544, b: 1, a: 1}
+      key1: {r: 0.008585358, g: 0, b: 0.3882353, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
