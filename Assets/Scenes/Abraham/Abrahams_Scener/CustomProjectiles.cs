@@ -126,6 +126,10 @@ public class CustomProjectiles : MonoBehaviour
                 collision.gameObject.GetComponent<DistanceEnemyV2>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
+            case "OgreEnemy":
+                collision.gameObject.GetComponent<MeleeEnemyAbraham>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
             case "Player":
                 collision.gameObject.GetComponent<PlayerHealth>().Damage(bulletDamage);
                 Destroy(gameObject);
