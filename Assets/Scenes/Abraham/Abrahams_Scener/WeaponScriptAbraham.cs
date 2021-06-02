@@ -19,7 +19,10 @@ public class WeaponScriptAbraham : MonoBehaviour
 
     int bulletsLeft, bulletsShot;
 
-   
+    //Audio
+    [SerializeField] private AudioClip shootSound;
+
+
 
     //bools
     bool shooting, readyToShoot, reloading;
@@ -55,6 +58,7 @@ public class WeaponScriptAbraham : MonoBehaviour
         //Check if allowed to hold down button and take corresponding input
         if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        
 
         //Reloading 
         if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
@@ -74,6 +78,8 @@ public class WeaponScriptAbraham : MonoBehaviour
     private void Shoot()
     {
         readyToShoot = false;
+
+        AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.1f);
 
         //Find the exact hit position using a raycast
         Ray ray = tpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
