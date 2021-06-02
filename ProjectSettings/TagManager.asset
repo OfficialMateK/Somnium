@@ -15,6 +15,9 @@ TagManager:
   - Boss
   - Bullet
   - ShootingEnemy
+  - Ground
+  - Default
+  - OgreEnemy
   layers:
   - Default
   - TransparentFX
