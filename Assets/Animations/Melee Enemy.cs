@@ -9,7 +9,8 @@ public class MeleeEnemy : MonoBehaviour
 {
     public Transform player;
     private Animator anim;
-    public UIhealthBar health;
+    public UIHealthBar health;
+    public AiAgent navmesh; 
     public float enemyHealth;
     public float maxHealth;
 
@@ -32,9 +33,9 @@ public class MeleeEnemy : MonoBehaviour
 
     public void Awake()
     {
-        if (!enemydeath)
-        {
-            nav = GetComponent <UnityEngine.AI.NavMeshAgent>();
+        //if 
+            {
+        //navmesh = GetComponent <UnityEngine.AI.NavMeshAgent>();
         player = GameObject.Find("Player").transform;
         anim = GetComponent<Animator>();
         health = GetComponentInChildren<UIHealthBar>();
@@ -45,12 +46,12 @@ public class MeleeEnemy : MonoBehaviour
 
     public void Death() 
     {
-        enemydeath = true;
-        nav.Stop();
+        //enemydeath = true;
+        //nav.Stop();
         anim.SetTrigger("Death");
         Destroy(this.gameObject, 10.0f);
         health.gameObject.SetActive(false);
-        Instantiate(deathParticle, transform.position, transform.rotation);
+        //Instantiate(deathParticle, transform.position, transform.rotation);
 
     
     }
