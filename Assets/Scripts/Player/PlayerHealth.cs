@@ -10,14 +10,13 @@ public class PlayerHealth : MonoBehaviour
     public int health;
     public HealthBar healthBar;
     public float delayTime = 2f;
-    private Animator anim;    
-    public AudioClip [] hurtSounds;
-    public AudioClip deathSound;
-    private int clipIndex;
+    private Animator anim;
+    private PlayerAudio playerAudio;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        playerAudio = GetComponent<PlayerAudio>();
         //healthText.text = health.ToString();
 
         if (PlayerPrefs.HasKey("PlayerHealth"))
@@ -48,13 +47,15 @@ public class PlayerHealth : MonoBehaviour
         if (health <= 0)
         {
             anim.SetTrigger("Death");
+            playerAudio.PlayDeathSound();
             Invoke("DelayedAction", delayTime);
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
 
-        anim.SetTrigger("Hurt"); //player hurt animation 
-        clipIndex = Random.Range(0, hurtSounds.Length);
-        AudioSource.PlayClipAtPoint(hurtSounds[clipIndex], transform.position);
+        anim.SetTrigger("Hurt"); //player hurt animation
+        playerAudio.PlayHurtSound();
+
+        //source.PlayOneShot(hurtSound);
+        //AudioSource.PlayClipAtPoint(hurtSound, transform.position);
 
         //  healthText.text = health.ToString();
         //Debug.Log("Player: Health Left = " + health);

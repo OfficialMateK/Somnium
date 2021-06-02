@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterControllerJohan : MonoBehaviour
 {
     //Movement
-    private CharacterController controller;
+    private Vector3 movementDirection;
     public float moveSpeed = 12f;
     private float horizontalInput;
     private float verticalInput;
@@ -18,6 +18,7 @@ public class CharacterControllerJohan : MonoBehaviour
     private float dashCooldown;
     public float dashCooldownAmount = 2f;
     private bool lockInputs;
+    
 
     //Gravity and Jump
     public Transform groundCheck;
@@ -29,16 +30,21 @@ public class CharacterControllerJohan : MonoBehaviour
     public float jumpHeight = 1.8f;
     public float jumpCooldown = 0.2f;  
     public float gravity = -20f;
+    
 
-    //Animation
+    //References
+    private CharacterController controller;
     private Animator animator;
-
+    private PlayerAudio playerAudio;
+    private PlayerParticles playerParticles;
 
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        playerAudio = GetComponent<PlayerAudio>();
+        playerParticles = GetComponent<PlayerParticles>();
     }
 
 
@@ -72,10 +78,18 @@ public class CharacterControllerJohan : MonoBehaviour
         }
 
         //Flyttar spelaren och normaliserar move så att spelaren inte rör sig snabbare diagonalt med flera knappar nedtryckta
-        Vector3 move = new Vector3(horizontalInput, 0, verticalInput);
-        move = transform.TransformDirection(move.normalized);
-        controller.Move(move * Time.deltaTime * moveSpeed * dashSpeedMultiplier);
+        //Vector3 move = new Vector3(horizontalInput, 0, verticalInput);
+        // move = transform.TransformDirection(move.normalized);
 
+        GetMovementDirection(horizontalInput, verticalInput);
+        controller.Move(movementDirection * Time.deltaTime * moveSpeed * dashSpeedMultiplier);
+
+    }
+
+    private void GetMovementDirection(float horizontalInput, float verticalInput)
+    {
+        movementDirection = new Vector3(horizontalInput, 0, verticalInput);
+        movementDirection = transform.TransformDirection(movementDirection.normalized);
     }
 
     private void Dash()
@@ -85,13 +99,23 @@ public class CharacterControllerJohan : MonoBehaviour
         dashCooldown = Time.time + dashCooldownAmount; //Startar dashens cooldown
         dashSpeedMultiplier = dashSpeedMultiplerAmount;
         verticalVelocity.y = 0f; //Stoppar spelarens hopp uppåt så att de inte avslutar hoppet i slutet av dashen
-        
+
         //Kollar dashens riktning och låser spelaren till denna
         if (!lockInputs)
         {
+            playerAudio.PlayDashSound();
+
             lockInputs = true;
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
+
+            GetMovementDirection(horizontalInput, verticalInput);
+            playerParticles.PlayDashTrail(movementDirection);
+
+            if (isGrounded)
+            {
+                playerParticles.PlayLeafParticles(movementDirection);
+            }
 
             //Om ingen spelaren står stilla defaultar dashen till rakt frammåt
             if (horizontalInput == 0 && verticalInput == 0)
@@ -133,6 +157,7 @@ public class CharacterControllerJohan : MonoBehaviour
                 jumpCooldown = Time.time + 0.2f;
                 groundedTimer = 0;
                 animator.SetTrigger("Jump");
+                playerAudio.PlayJumpSound();
                 verticalVelocity.y += Mathf.Sqrt(jumpHeight * -3f * gravity);
             }
 
