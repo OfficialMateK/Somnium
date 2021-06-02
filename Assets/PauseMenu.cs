@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject controls;
     public GameObject options;
     public GameObject crosshair;
+    public GameObject confirm;
 
 
 
@@ -34,6 +35,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        confirm.SetActive(false);
         crosshair.SetActive(true);
         options.SetActive(false);
         controls.SetActive(false);
