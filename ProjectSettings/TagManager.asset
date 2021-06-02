@@ -14,6 +14,7 @@ TagManager:
   - DestroyCrystal
   - Boss
   - Bullet
+  - ShootingEnemy
   layers:
   - Default
   - TransparentFX

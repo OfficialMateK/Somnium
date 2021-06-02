@@ -618,8 +618,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: 5068975581421638448}
-  healthbar: {fileID: 0}
+  healthbar: {fileID: 2768149648366397450}
   deathParticle: {fileID: 9109911221518003421, guid: 1c92e2ce88a0a234fb69a40e33eeab75, type: 3}
+  deathSound: {fileID: 0}
+  shootSound: {fileID: 0}
   enemyHealth: 100
   maxhealth: 100
   walkPoint: {x: 0, y: 0, z: 0}

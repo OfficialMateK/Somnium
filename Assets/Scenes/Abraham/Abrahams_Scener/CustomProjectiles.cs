@@ -2,14 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// Thanks for downloading my custom projectiles script! :D
-/// Feel free to use it in any project you like!
-/// 
-/// The code is fully commented but if you still have any questions
-/// don't hesitate to write a yt comment
-/// or use the #coding-problems channel of my discord server
-/// 
-/// Dave
 
 public class CustomProjectiles : MonoBehaviour
 {
@@ -40,17 +32,6 @@ public class CustomProjectiles : MonoBehaviour
     public GameObject secondBullet;
     public int sb_amount;
     public float sb_forwardForce, sb_upwardForce, sb_randomForce;
-
-   
-
-  
-
-    
-
-   
-   
-
-    
 
 
     private int collisions;
@@ -88,13 +69,7 @@ public class CustomProjectiles : MonoBehaviour
     ///Just to set the basic variables of the bullet/projectile
     private void Setup()
     {
-        //Setup physics material
-        physic_mat = new PhysicMaterial();
-        physic_mat.bounciness = bounciness;
-        physic_mat.frictionCombine = PhysicMaterialCombine.Minimum;
-        physic_mat.bounceCombine = PhysicMaterialCombine.Maximum;
-        //Apply the physics material to the collider
-        GetComponent<SphereCollider>().material = physic_mat;
+        
 
         //Don't use unity's gravity, we made our own (to have more control)
         rb.useGravity = useGravity;
@@ -119,6 +94,7 @@ public class CustomProjectiles : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<TrailRenderer>().emitting = false;
         Invoke("Delay", 0.08f);
+        
 
         
     }
@@ -144,6 +120,10 @@ public class CustomProjectiles : MonoBehaviour
                 break;
             case "Boss":
                 collision.gameObject.GetComponent<EnemyAiSHoot>().Damage(bulletDamage);
+                Destroy(gameObject);
+                break;
+            case "ShootingEnemy":
+                collision.gameObject.GetComponent<DistanceEnemyV2>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
             case "Player":
