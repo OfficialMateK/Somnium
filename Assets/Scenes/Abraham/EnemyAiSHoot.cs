@@ -12,6 +12,8 @@ public class EnemyAiSHoot : MonoBehaviour
     public Animator animator;
     public UIHealthBar healthbar;
     public ParticleSystem deathParticle;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip shootSound;
 
 
     public float enemyHealth;
@@ -100,6 +102,7 @@ public class EnemyAiSHoot : MonoBehaviour
             //Attack code
             Rigidbody rb = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 50f, ForceMode.Impulse);
+            AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.5f);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -123,7 +126,7 @@ public class EnemyAiSHoot : MonoBehaviour
             //Attack code
              Rigidbody rb = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation).GetComponent<Rigidbody>();
              rb.AddForce(transform.forward * 80f, ForceMode.Impulse);
-           
+            AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.5f);
 
             //GameObject bullet = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation) as GameObject;
             animator.SetFloat("Speed", 0);
@@ -166,6 +169,7 @@ public class EnemyAiSHoot : MonoBehaviour
         Destroy(gameObject);
         healthbar.gameObject.SetActive(false);
         Instantiate(deathParticle, transform.position, transform.rotation);
+        AudioSource.PlayClipAtPoint(deathSound, transform.position, 0.5f);
     }
 
 
