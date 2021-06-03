@@ -11,7 +11,9 @@ public class Respawn : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            other.GetComponent<CharacterController>().enabled = false;
             player.transform.position = respawnPoint.transform.position;
+            other.GetComponent<CharacterController>().enabled = true;
         }
     }
 }

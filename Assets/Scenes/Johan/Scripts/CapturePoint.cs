@@ -88,7 +88,7 @@ public class CapturePoint : MonoBehaviour
         if(spawnTime >= 10f)
         {
             spawnTime = 0f;
-            numberOfEnemiesToSpawn = Random.Range(4, 7);
+            numberOfEnemiesToSpawn = Random.Range(2, 3);
 
             for (int i = 0; i < numberOfEnemiesToSpawn; i++)
             {
