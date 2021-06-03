@@ -1742,12 +1742,12 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 1378090702433699413}
   deathParticle: {fileID: 9109911221518003421, guid: 1c92e2ce88a0a234fb69a40e33eeab75, type: 3}
+  deathSound: {fileID: 8300000, guid: 75f463b0c8aa3744b84a5a8f288d9fdd, type: 3}
+  shootSound: {fileID: 8300000, guid: f65eb505894611d42a513dd2464c2317, type: 3}
   healthBarUI: {fileID: 4788843286087346486}
   slider: {fileID: 4788843287553567121}
   enemyHealth: 100
   maxhealth: 100
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 20
   timeBetweenAttacks: 1
   projectile: {fileID: 5261908539032414034, guid: 8105fc634f82a424b87e4b5d47c4c7ba, type: 3}
   sightRange: 20
