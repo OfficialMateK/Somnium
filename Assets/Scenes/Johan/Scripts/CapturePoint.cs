@@ -25,9 +25,12 @@ public class CapturePoint : MonoBehaviour
     private float spawnTime = 0f;
     private int spawnPointNumber;
 
+    private GameManager gameManager;
+
     private void Start()
     {
         //lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uiChangeTrigger = GetComponentInChildren<UIChangeTrigger>();
     }
 
@@ -101,7 +104,8 @@ public class CapturePoint : MonoBehaviour
         //*Cool particles*
 
         lockCapturePoint = true;
-        lockedDoor.IncreaseObjectivesComplete();
+        //lockedDoor.IncreaseObjectivesComplete();
+        gameManager.CompleteCapture();
 
         uiChangeTrigger.triggerUIChange(3);
         gameObject.SetActive(false);
