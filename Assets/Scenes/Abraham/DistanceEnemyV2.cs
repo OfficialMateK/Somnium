@@ -13,8 +13,8 @@ public class DistanceEnemyV2 : MonoBehaviour
     public Animator animator;
   
     public ParticleSystem deathParticle;
-    // [SerializeField] private AudioClip deathSound;
-    // [SerializeField] private AudioClip shootSound;
+     [SerializeField] private AudioClip deathSound;
+     [SerializeField] private AudioClip shootSound;
 
     public GameObject healthBarUI;
     public Slider slider;
@@ -98,7 +98,7 @@ public class DistanceEnemyV2 : MonoBehaviour
             //Attack code
             Rigidbody rb = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 50f, ForceMode.Impulse);
-            //AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.5f);
+            AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.5f);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -122,7 +122,7 @@ public class DistanceEnemyV2 : MonoBehaviour
             //Attack code
             Rigidbody rb = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 80f, ForceMode.Impulse);
-            //AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.5f);
+            AudioSource.PlayClipAtPoint(shootSound, transform.position, 0.5f);
 
             //GameObject bullet = Instantiate(projectile, weaponPoint.position, weaponPoint.rotation) as GameObject;
             animator.SetFloat("Speed", 0);
@@ -174,7 +174,7 @@ public class DistanceEnemyV2 : MonoBehaviour
         Destroy(gameObject);
         //healthbar.gameObject.SetActive(false);
         Instantiate(deathParticle, transform.position, transform.rotation);
-        //AudioSource.PlayClipAtPoint(deathSound, transform.position, 0.5f);
+        AudioSource.PlayClipAtPoint(deathSound, transform.position, 0.5f);
     }
 
     float CalculateHealth()
