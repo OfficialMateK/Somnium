@@ -29,6 +29,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
         player = GameObject.Find("Player");
 
         anim = GetComponent<Animator>();
+        anim.SetFloat("Speed", 1f);
     }
 
     void Update()
@@ -50,7 +51,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
                     transform.position += transform.forward * enemySpeed * Time.deltaTime;
-                    anim.SetBool("walkForward", true); 
+                   
                 }
             }
         }
@@ -72,20 +73,32 @@ public class NewMeleeEnemyScript : MonoBehaviour
         if (enemyHealth <= 0)
         {
 
-            KillEnemy();
+            DeathEnemy();
         }
 
         Debug.Log("Enemy: Health Left: " + enemyHealth);
     }
 
-    private void KillEnemy()
+    private void DeathEnemy()
     {
 
-        Destroy(gameObject);
+        
         //healthbar.gameObject.SetActive(false);
         Instantiate(deathParticle, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(deathSound, transform.position, 0.5f);
+        StartCoroutine(KillEnemy());
     }
+
+     private IEnumerator KillEnemy()
+    {
+        //gameObject.SetActive(false);
+        transform.position = new Vector3(0, 3000, 0);
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+    }
+
+
+
 
     float CalculateHealth()
     {
@@ -100,6 +113,8 @@ public class NewMeleeEnemyScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            anim.SetFloat("Speed", 2.0f);
+
             if (attackCooldownTemp <= 0.0f)
             {
                 Debug.Log("Enemy: Hit Player");
@@ -108,4 +123,16 @@ public class NewMeleeEnemyScript : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.gameObject.CompareTag("Player"))
+
+            anim.SetFloat("Speed", 1f);
+
+
+    }
+
+
 }
