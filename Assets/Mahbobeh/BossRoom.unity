@@ -21756,7 +21756,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7480fc69dda1b6f498f9b5ead9386b2d, type: 3}
   jumpSound: {fileID: 8300000, guid: 9c99a59fca485d943a52d4186462b31c, type: 3}
   dashSound: {fileID: 8300000, guid: 32032589235227d45be7f918b1145d8c, type: 3}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 0959739e3d3cd4f46a963d3463f7e13e, type: 3}
 --- !u!114 &1304377548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23039,13 +23039,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c617158bf1bd343a87b954614c6fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost1: {fileID: 0}
-  ghost2: {fileID: 0}
-  ghost3: {fileID: 0}
-  ghost4: {fileID: 0}
-  ghost5: {fileID: 0}
-  minDelay: 0
-  maxDelay: 0
+  ghost1: {fileID: 8300000, guid: 5580ca41a8776ee4795ed2ff0caeaa99, type: 3}
+  ghost2: {fileID: 8300000, guid: 28db86976d4eb09468623d497e2bc2d0, type: 3}
+  ghost3: {fileID: 8300000, guid: f8790e68b42cb964199e4b60146df41e, type: 3}
+  ghost4: {fileID: 8300000, guid: 0d358e8357492f446a93066eb1dd0101, type: 3}
+  ghost5: {fileID: 8300000, guid: d8226ab5ccc29e44d9a1eff3acedb75f, type: 3}
+  minDelay: 15
+  maxDelay: 45
 --- !u!82 &1504141401
 AudioSource:
   m_ObjectHideFlags: 0
