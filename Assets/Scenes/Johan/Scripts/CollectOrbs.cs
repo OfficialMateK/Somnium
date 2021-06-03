@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollectOrbs : MonoBehaviour
 {
     private int orbsCollected = 0;
-    private LockedDoor lockedDoor;
+    private GameManager gameManager;
 
     [SerializeField] private GameObject[] shields;
     [SerializeField] private GameObject[] orbs;
@@ -21,7 +21,8 @@ public class CollectOrbs : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        //lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         uiChangeTrigger = GetComponent<UIChangeTrigger>();
     }
 
@@ -48,7 +49,8 @@ public class CollectOrbs : MonoBehaviour
     private void CompleteObjective()
     {
         //Byter tillbaka UI:en och stänger objectivet
-        lockedDoor.IncreaseObjectivesComplete();
+        //lockedDoor.IncreaseObjectivesComplete();
+        gameManager.CompleteCollection();
         uiChangeTrigger.triggerUIChange(2);
         gameObject.SetActive(false);
     }

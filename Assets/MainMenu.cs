@@ -17,4 +17,11 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void LoadGame()
+    {
+        PlayerSaveData data = PlayerSaveSystem.LoadPlayer();
+        //SaveData.current = (SaveData)SerializationManager.Load(Application.persistentDataPath + "/saves/Save.save");
+
+    }
+
 }
