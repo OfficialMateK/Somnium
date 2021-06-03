@@ -15,7 +15,7 @@ public class NewMeleeEnemyScript : MonoBehaviour
     private Animator anim; 
     void Start()
     {
-        player = GameObject.Find("PlayerTargetPoint");
+        player = GameObject.Find("Player");
 
         anim = GetComponent<Animator>();
     }

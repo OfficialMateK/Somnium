@@ -67,5 +67,31 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void SaveGame()
+    {
+        //GameObject player = GameObject.Find("Player");
+       // GameObject gameManager = GameObject.Find("GameManager");
+
+        //Player Data
+        /*
+        SaveData.current.playerSaveData.health = player.GetComponent<PlayerHealth>().GetHealth();
+        //SaveData.current.playerSaveData.ammoCurrent =
+        //SaveData.current.playerSaveData.ammoBackup =
+        SaveData.current.playerSaveData.position[0] = player.transform.position.x;
+        SaveData.current.playerSaveData.position[1] = player.transform.position.y;
+        SaveData.current.playerSaveData.position[2] = player.transform.position.z;
+
+        //Level Data
+        SaveData.current.levelNumber = gameManager.GetComponent<GameManager>().GetSceneNumber();
+        SaveData.current.crystalCompleted = gameManager.GetComponent<GameManager>().GetCrystalCompleted();
+        SaveData.current.collectionCompleted = gameManager.GetComponent<GameManager>().GetCollectionCompleted();
+        SaveData.current.captureCompleted = gameManager.GetComponent<GameManager>().GetCaptureCompleted();
+        */
+
+        GameObject player = GameObject.Find("Player");
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        PlayerSaveSystem.SavePlayer(player,gameManager);
+    }
+
 
 }
