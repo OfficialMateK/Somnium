@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
     }
 
     public void CompleteCrystal()
