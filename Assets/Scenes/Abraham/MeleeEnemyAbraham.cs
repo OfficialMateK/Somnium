@@ -11,6 +11,7 @@ public class MeleeEnemyAbraham : MonoBehaviour
 
     public LayerMask Ground, Player;
     public Animator animator;
+    public int enemyDamage;
 
     public ParticleSystem deathParticle;
     // [SerializeField] private AudioClip deathSound;
@@ -31,7 +32,9 @@ public class MeleeEnemyAbraham : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
+
+    private float attackCooldownTemp;
+    public float attackCooldown;
 
     //States
     public float sightRange, attackRange;
@@ -51,6 +54,9 @@ public class MeleeEnemyAbraham : MonoBehaviour
 
     private void Update()
     {
+
+
+
 
         //slider.value = CalculateHealth();
 
@@ -128,6 +134,21 @@ public class MeleeEnemyAbraham : MonoBehaviour
 
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+
+            if (attackCooldownTemp <= 0.0f)
+            {
+                Debug.Log("Enemy: Hit Player");
+                other.GetComponent<PlayerHealth>().Damage(enemyDamage);
+                attackCooldownTemp = attackCooldown;
+            }
+    }
+
+
+
 
 
 
