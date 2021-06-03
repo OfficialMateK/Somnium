@@ -13,7 +13,7 @@ public class DestroyCrystal : MonoBehaviour
     public CrystalUI healthUI;
     private UIChangeTrigger uiChangeTrigger;
 
-    private LockedDoor lockedDoor;
+    //private LockedDoor lockedDoor;
     private float currentHealth = 500f;
     public float healthRegenRate = 15f;
     private float currentDamageThreshold = 0;
@@ -32,10 +32,14 @@ public class DestroyCrystal : MonoBehaviour
     private float enemySpawnTime = 10f;
     private float currentSpawnTime = 0f;
 
+    private GameManager gameManager;
+
 
     private void Start()
     {
-        lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        //lockedDoor = GameObject.Find("LockedDoor").GetComponent<LockedDoor>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         uiChangeTrigger = GetComponentInChildren<UIChangeTrigger>();
     }
 
@@ -63,7 +67,7 @@ public class DestroyCrystal : MonoBehaviour
         if(currentHealth <= 0)
         {
             canSpawnEnemies = false;
-            DestroyKey();
+            CompleteObjective();
         }
     }
 
@@ -127,9 +131,10 @@ public class DestroyCrystal : MonoBehaviour
         }
     }
 
-    private void DestroyKey()
+    private void CompleteObjective()
     {
-        lockedDoor.IncreaseObjectivesComplete();
+        //lockedDoor.IncreaseObjectivesComplete();
+        gameManager.CompleteCapture();
         uiChangeTrigger.triggerUIChange(1);
         Destroy(gameObject, 0.1f);
     }

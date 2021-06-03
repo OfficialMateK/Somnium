@@ -5,17 +5,18 @@ using UnityEngine;
 public class LockedDoor : MonoBehaviour
 {
 
-    private int objectivesComplete = 0;
+    ///private int objectivesComplete = 0;
     [SerializeField] private GameObject lightPillar;
     [SerializeField] private GameObject returnToCastleUI;
 
 
-    private void UnlockDoor()
+    public void UnlockDoor()
     {
         lightPillar.SetActive(true);
         gameObject.SetActive(false);
     }
 
+    /*
     public void IncreaseObjectivesComplete()
     {
         objectivesComplete++;
@@ -25,4 +26,5 @@ public class LockedDoor : MonoBehaviour
             UnlockDoor();
         }
     }
+    */
 }

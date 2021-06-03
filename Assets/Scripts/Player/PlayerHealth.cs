@@ -89,6 +89,12 @@ public class PlayerHealth : MonoBehaviour
             Invoke("DelayedAction", delayTime);
         }
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
     void DelayedAction()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
