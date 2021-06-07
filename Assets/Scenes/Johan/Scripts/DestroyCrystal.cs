@@ -134,7 +134,7 @@ public class DestroyCrystal : MonoBehaviour
     private void CompleteObjective()
     {
         //lockedDoor.IncreaseObjectivesComplete();
-        gameManager.CompleteCapture();
+        gameManager.CompleteCrystal();
         uiChangeTrigger.triggerUIChange(1);
         Destroy(gameObject, 0.1f);
     }

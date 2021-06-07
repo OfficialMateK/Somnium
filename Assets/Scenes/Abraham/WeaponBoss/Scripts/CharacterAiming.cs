@@ -7,7 +7,7 @@ public class CharacterAiming : MonoBehaviour
     public float turnSpeed = 15;
     Camera mainCamera;
 
-    RaycastWeapon weapon;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,7 @@ public class CharacterAiming : MonoBehaviour
         mainCamera = Camera.main;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        weapon = GetComponentInChildren<RaycastWeapon>();
+        
     }
 
     // Update is called once per frame

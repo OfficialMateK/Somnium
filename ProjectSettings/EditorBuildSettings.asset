@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Dilde/Menu.unity
     guid: 314eb49aef349b742b41e6d89c17a1d6
   - enabled: 1
-    path: Assets/Scenes/Level1_V5/Level 1 V5_Abraham.unity
+    path: Assets/Scenes/Level1_V5/Sista versionen/Level 1 V5_Abraham.unity
     guid: d36fffe4e092bf5469ec3ff8af2379b8
   - enabled: 1
-    path: Assets/Mahbobeh/BossRoom.unity
+    path: Assets/Scenes/Mahbobeh/BossRoom.unity
     guid: 257ccd3dbde77cd4997d2d8f44ea054f
   - enabled: 1
-    path: Assets/Scenes/Abraham/Abrahams_Scener/EndCredits.unity
+    path: Assets/Scenes/Abraham/Abrahams_Assets/Scener/EndCredits.unity
     guid: 74465d125411b3a4cbe9c823ceee49b9
   m_configObjects: {}

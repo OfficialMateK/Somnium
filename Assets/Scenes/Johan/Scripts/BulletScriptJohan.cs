@@ -80,10 +80,7 @@ public class BulletScriptJohan : MonoBehaviour
                 collision.gameObject.GetComponent<DistanceEnemyScript>().Damage(bulletDamage);
                 Destroy(gameObject);
                 break;
-            case "Boss":
-                collision.gameObject.GetComponent<ShootingAiTut>().Damage(bulletDamage);
-                Destroy(gameObject);
-                break;
+            
             case "DestroyCrystal":
                 collision.gameObject.GetComponent<DestroyCrystal>().TakeDamage(bulletDamage);
                 Destroy(gameObject);
