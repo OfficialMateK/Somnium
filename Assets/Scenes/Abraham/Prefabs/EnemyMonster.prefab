@@ -620,13 +620,13 @@ MonoBehaviour:
   animator: {fileID: 5068975581421638448}
   healthbar: {fileID: 2768149648366397450}
   deathParticle: {fileID: 9109911221518003421, guid: 1c92e2ce88a0a234fb69a40e33eeab75, type: 3}
-  deathSound: {fileID: 0}
-  shootSound: {fileID: 0}
-  enemyHealth: 100
-  maxhealth: 100
+  deathSound: {fileID: 8300000, guid: 9e99047ce8ab7464dbf96b5b4b886906, type: 3}
+  shootSound: {fileID: 8300000, guid: f65eb505894611d42a513dd2464c2317, type: 3}
+  enemyHealth: 125
+  maxhealth: 125
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 20
-  timeBetweenAttacks: 0.3
+  timeBetweenAttacks: 0.5
   projectile: {fileID: 5261908539032414034, guid: 8105fc634f82a424b87e4b5d47c4c7ba, type: 3}
   sightRange: 25
   attackRange: 5

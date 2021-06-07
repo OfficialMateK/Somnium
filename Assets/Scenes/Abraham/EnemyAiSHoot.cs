@@ -16,6 +16,10 @@ public class EnemyAiSHoot : MonoBehaviour
     [SerializeField] private AudioClip shootSound;
 
 
+
+    private BossWaves waves;
+
+
     public float enemyHealth;
     public float maxhealth;
 
@@ -44,6 +48,7 @@ public class EnemyAiSHoot : MonoBehaviour
         animator = GetComponent<Animator>();
         healthbar = GetComponentInChildren<UIHealthBar>();
         enemyHealth = maxhealth;
+        waves = GameObject.Find("BossManager").GetComponent<BossWaves>();
     }
 
     private void Update()
@@ -166,10 +171,12 @@ public class EnemyAiSHoot : MonoBehaviour
     private void KillEnemy()
     {
         
-        Destroy(gameObject);
+        
         healthbar.gameObject.SetActive(false);
         Instantiate(deathParticle, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(deathSound, transform.position, 0.5f);
+        waves.DecreaseEnemies();
+        Destroy(gameObject);
     }
 
 
